@@ -1,0 +1,21 @@
+name: reflect_ui
+description: reflect_ui
+version: 0.0.1
+homepage: https://github.com/leanflutter/reflect_ui/tree/main/packages/reflect_ui
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.3.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_svg: ^2.0.10+1
+  theme_tailor_annotation: ^2.0.2
+
+dev_dependencies:
+  build_runner: ^2.4.7
+  flutter_test:
+    sdk: flutter
+  mostly_reasonable_lints: ^0.1.2
+  theme_tailor: ^2.0.2
