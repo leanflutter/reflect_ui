@@ -7,20 +7,67 @@ environment:
   sdk: ">=3.4.0 <4.0.0"
 
 dependencies:
-  collection: ^1.15.0
+  collection: ^1.18.0
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
   reflect_ui: ^0.1.0
-  storybook_dart: ^0.0.2
-  storybook_dart_annotation: ^0.0.2
+  storybook_dart: ^0.0.3
 
 dev_dependencies:
   build_runner: ^2.3.3
   flutter_test:
     sdk: flutter
   mostly_reasonable_lints: ^0.1.2
-  storybook_dart_generator: ^0.0.2
+  storybook_dart_generator: ^0.0.3
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: fonts/Inter-Thin.ttf
+          weight: 100
+        - asset: fonts/Inter-ThinItalic.ttf
+          weight: 100
+          style: italic
+        - asset: fonts/Inter-ExtraLight.ttf
+          weight: 200
+        - asset: fonts/Inter-ExtraLightItalic.ttf
+          weight: 200
+          style: italic
+        - asset: fonts/Inter-Light.ttf
+          weight: 300
+        - asset: fonts/Inter-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: fonts/Inter-Regular.ttf
+          weight: 400
+        - asset: fonts/Inter-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: fonts/Inter-Medium.ttf
+          weight: 500
+        - asset: fonts/Inter-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: fonts/Inter-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Inter-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: fonts/Inter-Bold.ttf
+          weight: 700
+        - asset: fonts/Inter-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: fonts/Inter-ExtraBold.ttf
+          weight: 800
+        - asset: fonts/Inter-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+        - asset: fonts/Inter-Black.ttf
+          weight: 900
+        - asset: fonts/Inter-BlackItalic.ttf
+          weight: 900
+          style: italic

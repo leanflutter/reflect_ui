@@ -4,11 +4,57 @@ import 'package:flutter/material.dart'
 import 'package:flutter/widgets.dart';
 import 'package:preview_app/storybook_config.g.dart';
 import 'package:reflect_ui/reflect_ui.dart';
+import 'package:storybook_dart/annotations.dart' as storybook;
 import 'package:storybook_dart/storybook_dart.dart';
-import 'package:storybook_dart_annotation/storybook_dart_annotation.dart'
-    as storybook;
 
 part 'storybook_preview_app.g.dart';
+
+const String _kDefaultFontFamily = 'Inter';
+
+const TextStyle _kBodyLargeTextStyle = TextStyle(
+  fontFamily: _kDefaultFontFamily,
+  color: Colors.black,
+  fontSize: 16,
+  height: 20 / 16,
+);
+
+const TextStyle _kBodyMediumTextStyle = TextStyle(
+  fontFamily: _kDefaultFontFamily,
+  color: Colors.black,
+  fontSize: 14,
+  height: 18 / 14,
+);
+
+const TextStyle _kBodySmallTextStyle = TextStyle(
+  fontFamily: _kDefaultFontFamily,
+  color: Colors.black,
+  fontSize: 12,
+  height: 16 / 12,
+);
+
+const TextStyle _kLabelLargeTextStyle = TextStyle(
+  fontFamily: _kDefaultFontFamily,
+  fontWeight: FontWeight.w600,
+  color: Colors.black,
+  fontSize: 14,
+  height: 18 / 14,
+);
+
+const TextStyle _kLabelMediumTextStyle = TextStyle(
+  fontFamily: _kDefaultFontFamily,
+  fontWeight: FontWeight.w600,
+  color: Colors.black,
+  fontSize: 12,
+  height: 16 / 12,
+);
+
+const TextStyle _kLabelSmallTextStyle = TextStyle(
+  fontFamily: _kDefaultFontFamily,
+  fontWeight: FontWeight.w600,
+  color: Colors.black,
+  fontSize: 10,
+  height: 14 / 10,
+);
 
 class _HomePage extends StatefulWidget {
   const _HomePage({
@@ -128,7 +174,17 @@ class StorybookPreviewApp extends StorybookPreviewer
 
   @override
   ThemeData get theme {
-    return ThemeData.light();
+    ThemeData themeData = ThemeData.light();
+    return themeData.copyWith(
+      textTheme: themeData.textTheme.copyWith(
+        bodyLarge: _kBodyLargeTextStyle,
+        bodyMedium: _kBodyMediumTextStyle,
+        bodySmall: _kBodySmallTextStyle,
+        labelLarge: _kLabelLargeTextStyle,
+        labelMedium: _kLabelMediumTextStyle,
+        labelSmall: _kLabelSmallTextStyle,
+      ),
+    );
   }
 
   @override

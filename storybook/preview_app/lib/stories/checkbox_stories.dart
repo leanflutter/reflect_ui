@@ -1,8 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:reflect_ui/reflect_ui.dart';
+import 'package:storybook_dart/annotations.dart' as storybook;
 import 'package:storybook_dart/storybook_dart.dart';
-import 'package:storybook_dart_annotation/storybook_dart_annotation.dart'
-    as storybook;
 
 part 'checkbox_stories.g.dart';
 

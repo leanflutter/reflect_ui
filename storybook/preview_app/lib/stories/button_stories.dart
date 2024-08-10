@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart' show Colors;
 import 'package:flutter/widgets.dart';
 import 'package:reflect_ui/reflect_ui.dart';
+import 'package:storybook_dart/annotations.dart' as storybook;
 import 'package:storybook_dart/storybook_dart.dart';
-import 'package:storybook_dart_annotation/storybook_dart_annotation.dart'
-    as storybook;
 
 part 'button_stories.g.dart';
 
@@ -15,7 +15,26 @@ class ButtonMeta extends Meta with _$ButtonMeta {
   Widget buildWidget(BuildContext context, List<Arg> args) {
     return StatefulBuilder(
       builder: (context, setState) {
-        return const Button();
+        return Row(
+          children: [
+            Button(
+              child: const Text('Text Button'),
+              onPressed: () {},
+            ),
+            const SizedBox(width: 8),
+            Button(
+              variant: ButtonVariant.outlined,
+              child: const Text('Text Button'),
+              onPressed: () {},
+            ),
+            const SizedBox(width: 8),
+            Container(
+              color: Colors.grey,
+              height: 28,
+              width: 28,
+            ),
+          ],
+        );
       },
     );
   }
