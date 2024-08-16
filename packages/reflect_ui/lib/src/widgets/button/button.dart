@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart' show CupertinoColors;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:reflect_ui/src/constants.dart';
+import 'package:reflect_ui/src/widgets/button/button_kind.dart';
 import 'package:reflect_ui/src/widgets/button/button_style.dart';
 import 'package:reflect_ui/src/widgets/button/button_variant.dart';
 import 'package:reflect_ui/src/widgets/button/filled_button_style.dart';
@@ -51,6 +52,7 @@ class Button extends StatefulWidget {
     required this.child,
     this.style,
     this.variant = ButtonVariant.filled,
+    this.kind = ButtonKind.primary,
     this.padding,
     this.color,
     this.disabledColor = CupertinoColors.quaternarySystemFill,
@@ -76,6 +78,8 @@ class Button extends StatefulWidget {
   final ButtonStyle? style;
 
   final ButtonVariant variant;
+
+  final ButtonKind kind;
 
   /// The amount of space to surround the child inside the bounds of the button.
   ///

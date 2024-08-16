@@ -13,7 +13,7 @@ class FilledButtonStyle extends ButtonStyle {
   WidgetStateProperty<TextStyle?>? get textStyle {
     return WidgetStateProperty.resolveWith<TextStyle?>(
       (Set<WidgetState> states) {
-        return _themeData.textTheme.labelLarge;
+        return _themeData.textTheme.labelMedium;
       },
     );
   }

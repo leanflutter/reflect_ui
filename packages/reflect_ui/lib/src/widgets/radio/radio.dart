@@ -6,7 +6,8 @@
 
 import 'package:flutter/cupertino.dart' show CupertinoColors;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:reflect_ui/src/constants.dart';
 
 // Examples can assume:
 // late BuildContext context;
@@ -14,9 +15,12 @@ import 'package:flutter/widgets.dart';
 // late SingingCharacter? _character;
 // late StateSetter setState;
 
-const Size _size = Size(18.0, 18.0);
-const double _kOuterRadius = 7.0;
-const double _kInnerRadius = 2.975;
+const Size _size = Size(
+  kMinInteractiveDimensionReflect,
+  kMinInteractiveDimensionReflect,
+);
+const double _kOuterRadius = 8.0;
+const double _kInnerRadius = 3.6;
 
 // The relative values needed to transform a color to its equivalent focus
 // outline color.
@@ -29,7 +33,7 @@ const double _kCupertinoFocusColorSaturation = 0.835;
 /// Used to select between a number of mutually exclusive values. When one radio
 /// button in a group is selected, the other radio buttons in the group are
 /// deselected. The values are of type `T`, the type parameter of the
-/// [ReflectRadio] class. Enums are commonly used for this purpose.
+/// [Radio] class. Enums are commonly used for this purpose.
 ///
 /// The radio button itself does not maintain any state. Instead, selecting the
 /// radio invokes the [onChanged] callback, passing [value] as a parameter. If
@@ -38,10 +42,10 @@ const double _kCupertinoFocusColorSaturation = 0.835;
 /// radio button's [groupValue].
 ///
 /// {@tool dartpad}
-/// Here is an example of ReflectRadio widgets wrapped in CupertinoListTiles.
+/// Here is an example of Radio widgets wrapped in CupertinoListTiles.
 ///
 /// The currently selected character is passed into `groupValue`, which is
-/// maintained by the example's `State`. In this case, the first [ReflectRadio]
+/// maintained by the example's `State`. In this case, the first [Radio]
 /// will start off selected because `_character` is initialized to
 /// `SingingCharacter.lafayette`.
 ///
@@ -59,7 +63,7 @@ const double _kCupertinoFocusColorSaturation = 0.835;
 ///  * [CupertinoCheckbox] and [CupertinoSwitch], for toggling a particular value on or off.
 ///  * [Radio], the Material Design equivalent.
 ///  * <https://developer.apple.com/design/human-interface-guidelines/components/selection-and-input/toggles/>
-class ReflectRadio<T> extends StatefulWidget {
+class Radio<T> extends StatefulWidget {
   /// Creates a macOS-styled radio button.
   ///
   /// The following arguments are required:
@@ -67,7 +71,7 @@ class ReflectRadio<T> extends StatefulWidget {
   /// * [value] and [groupValue] together determine whether the radio button is
   ///   selected.
   /// * [onChanged] is called when the user selects this radio button.
-  const ReflectRadio({
+  const Radio({
     super.key,
     required this.value,
     required this.groupValue,
@@ -95,7 +99,7 @@ class ReflectRadio<T> extends StatefulWidget {
   /// [groupValue].
   final T? groupValue;
 
-  /// Called when the user selects this [ReflectRadio] button.
+  /// Called when the user selects this [Radio] button.
   ///
   /// The radio button passes [value] as a parameter to this callback. It does
   /// not actually change state until the parent widget rebuilds the radio
@@ -111,7 +115,7 @@ class ReflectRadio<T> extends StatefulWidget {
   /// gets rebuilt; for example:
   ///
   /// ```dart
-  /// ReflectRadio<SingingCharacter>(
+  /// Radio<SingingCharacter>(
   ///   value: SingingCharacter.lafayette,
   ///   groupValue: _character,
   ///   onChanged: (SingingCharacter? newValue) {
@@ -205,10 +209,10 @@ class ReflectRadio<T> extends StatefulWidget {
   bool get _selected => value == groupValue;
 
   @override
-  State<ReflectRadio<T>> createState() => _ReflectRadioState<T>();
+  State<Radio<T>> createState() => _RadioState<T>();
 }
 
-class _ReflectRadioState<T> extends State<ReflectRadio<T>>
+class _RadioState<T> extends State<Radio<T>>
     with TickerProviderStateMixin, ToggleableStateMixin {
   final _RadioPainter _painter = _RadioPainter();
 
@@ -248,8 +252,9 @@ class _ReflectRadioState<T> extends State<ReflectRadio<T>>
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     final Color effectiveActiveColor =
-        widget.activeColor ?? CupertinoColors.activeBlue;
+        widget.activeColor ?? themeData.primaryColor;
     final Color effectiveInactiveColor =
         widget.inactiveColor ?? CupertinoColors.white;
 
@@ -354,7 +359,7 @@ class _RadioPainter extends ToggleablePainter {
     final Paint paint = Paint()
       ..color = inactiveColor
       ..style = PaintingStyle.fill
-      ..strokeWidth = 0.1;
+      ..strokeWidth = 1;
 
     if (checkmarkStyle) {
       if (value ?? false) {
@@ -382,7 +387,7 @@ class _RadioPainter extends ToggleablePainter {
       canvas.drawCircle(center, _kOuterRadius, paint);
 
       paint.style = PaintingStyle.stroke;
-      paint.color = CupertinoColors.inactiveGray;
+      paint.color = value == true ? activeColor : CupertinoColors.inactiveGray;
       canvas.drawCircle(center, _kOuterRadius, paint);
 
       if (value ?? false) {
@@ -401,22 +406,4 @@ class _RadioPainter extends ToggleablePainter {
       canvas.drawCircle(center, _kOuterRadius + 1.5, paint);
     }
   }
-}
-
-class Radio<T> extends ReflectRadio<T> {
-  const Radio({
-    super.key,
-    required super.value,
-    required super.groupValue,
-    required super.onChanged,
-    super.mouseCursor,
-    super.toggleable,
-    super.activeColor,
-    super.inactiveColor,
-    super.fillColor,
-    super.focusColor,
-    super.focusNode,
-    super.autofocus,
-    super.useCheckmarkStyle,
-  });
 }

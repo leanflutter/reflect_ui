@@ -25,6 +25,7 @@ import 'package:flutter/cupertino.dart'
         cupertinoTextSelectionHandleControls;
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart' show Theme, ThemeData;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -63,7 +64,7 @@ const BoxDecoration _kDefaultRoundedBorderDecoration = BoxDecoration(
     darkColor: CupertinoColors.black,
   ),
   border: _kDefaultRoundedBorder,
-  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+  borderRadius: BorderRadius.all(Radius.circular(6.0)),
 );
 
 const Color _kDisabledBackground = CupertinoDynamicColor.withBrightness(
@@ -111,14 +112,14 @@ enum OverlayVisibilityMode {
   always,
 }
 
-class _ReflectTextFieldSelectionGestureDetectorBuilder
+class _TextFieldSelectionGestureDetectorBuilder
     extends TextSelectionGestureDetectorBuilder {
-  _ReflectTextFieldSelectionGestureDetectorBuilder({
-    required _ReflectTextFieldState state,
+  _TextFieldSelectionGestureDetectorBuilder({
+    required _TextFieldState state,
   })  : _state = state,
         super(delegate: state);
 
-  final _ReflectTextFieldState _state;
+  final _TextFieldState _state;
 
   @override
   void onSingleTapUp(TapDragUpDetails details) {
@@ -162,7 +163,7 @@ class _ReflectTextFieldSelectionGestureDetectorBuilder
 /// {@macro flutter.widgets.EditableText.onChanged}
 ///
 /// {@tool dartpad}
-/// This example shows how to set the initial value of the [ReflectTextField] using
+/// This example shows how to set the initial value of the [TextField] using
 /// a [controller] that already contains some text.
 ///
 /// ** See code in examples/api/lib/cupertino/text_field/cupertino_text_field.0.dart **
@@ -184,11 +185,11 @@ class _ReflectTextFieldSelectionGestureDetectorBuilder
 ///
 /// ## Scrolling Considerations
 ///
-/// If this [ReflectTextField] is not a descendant of [Scaffold] and is being
+/// If this [TextField] is not a descendant of [Scaffold] and is being
 /// used within a [Scrollable] or nested [Scrollable]s, consider placing a
 /// [ScrollNotificationObserver] above the root [Scrollable] that contains this
-/// [ReflectTextField] to ensure proper scroll coordination for
-/// [ReflectTextField] and its components like [TextSelectionOverlay].
+/// [TextField] to ensure proper scroll coordination for
+/// [TextField] and its components like [TextSelectionOverlay].
 ///
 /// See also:
 ///
@@ -199,7 +200,7 @@ class _ReflectTextFieldSelectionGestureDetectorBuilder
 ///    [TextField].
 ///  * Learn how to use a [TextEditingController] in one of our [cookbook recipes](https://docs.flutter.dev/cookbook/forms/text-field-changes#2-use-a-texteditingcontroller).
 ///  * <https://developer.apple.com/design/human-interface-guidelines/ios/controls/text-fields/>
-class ReflectTextField extends StatefulWidget {
+class TextField extends StatefulWidget {
   /// Creates an iOS-style text field.
   ///
   /// To provide a prefilled text entry, pass in a [TextEditingController] with
@@ -238,14 +239,14 @@ class ReflectTextField extends StatefulWidget {
   ///  * [expands], to allow the widget to size itself to its parent's height.
   ///  * [maxLength], which discusses the precise meaning of "number of
   ///    characters" and how it may differ from the intuitive meaning.
-  const ReflectTextField({
+  const TextField({
     super.key,
     this.groupId = EditableText,
     this.controller,
     this.focusNode,
     this.undoController,
     this.decoration = _kDefaultRoundedBorderDecoration,
-    this.padding = const EdgeInsets.all(7.0),
+    this.padding = const EdgeInsets.all(5.0),
     this.placeholder,
     this.placeholderStyle = const TextStyle(
       fontWeight: FontWeight.w400,
@@ -369,7 +370,7 @@ class ReflectTextField extends StatefulWidget {
   ///  * [expands], to allow the widget to size itself to its parent's height.
   ///  * [maxLength], which discusses the precise meaning of "number of
   ///    characters" and how it may differ from the intuitive meaning.
-  const ReflectTextField.borderless({
+  const TextField.borderless({
     super.key,
     this.groupId = EditableText,
     this.controller,
@@ -823,11 +824,11 @@ class ReflectTextField extends StatefulWidget {
   ///
   /// See also:
   ///  * [spellCheckConfiguration], where this is typically specified for
-  ///    [ReflectTextField].
+  ///    [TextField].
   ///  * [SpellCheckConfiguration.spellCheckSuggestionsToolbarBuilder], the
-  ///    parameter for which this is the default value for [ReflectTextField].
+  ///    parameter for which this is the default value for [TextField].
   ///  * [TextField.defaultSpellCheckSuggestionsToolbarBuilder], which is like
-  ///    this but specifies the default for [ReflectTextField].
+  ///    this but specifies the default for [TextField].
   @visibleForTesting
   static Widget defaultSpellCheckSuggestionsToolbarBuilder(
     BuildContext context,
@@ -842,7 +843,7 @@ class ReflectTextField extends StatefulWidget {
   final UndoHistoryController? undoController;
 
   @override
-  State<ReflectTextField> createState() => _ReflectTextFieldState();
+  State<TextField> createState() => _TextFieldState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -981,18 +982,18 @@ class ReflectTextField extends StatefulWidget {
 
     return configuration.copyWith(
       misspelledTextStyle: configuration.misspelledTextStyle ??
-          ReflectTextField.cupertinoMisspelledTextStyle,
+          TextField.cupertinoMisspelledTextStyle,
       misspelledSelectionColor: configuration.misspelledSelectionColor ??
-          ReflectTextField.kMisspelledSelectionColor,
+          TextField.kMisspelledSelectionColor,
       spellCheckSuggestionsToolbarBuilder:
           configuration.spellCheckSuggestionsToolbarBuilder ??
-              ReflectTextField.defaultSpellCheckSuggestionsToolbarBuilder,
+              TextField.defaultSpellCheckSuggestionsToolbarBuilder,
     );
   }
 }
 
-class _ReflectTextFieldState extends State<ReflectTextField>
-    with RestorationMixin, AutomaticKeepAliveClientMixin<ReflectTextField>
+class _TextFieldState extends State<TextField>
+    with RestorationMixin, AutomaticKeepAliveClientMixin<TextField>
     implements TextSelectionGestureDetectorBuilderDelegate, AutofillClient {
   final GlobalKey _clearGlobalKey = GlobalKey();
 
@@ -1010,7 +1011,7 @@ class _ReflectTextFieldState extends State<ReflectTextField>
 
   bool _showSelectionHandles = false;
 
-  late _ReflectTextFieldSelectionGestureDetectorBuilder
+  late _TextFieldSelectionGestureDetectorBuilder
       _selectionGestureDetectorBuilder;
 
   // API for TextSelectionGestureDetectorBuilderDelegate.
@@ -1029,7 +1030,7 @@ class _ReflectTextFieldState extends State<ReflectTextField>
   void initState() {
     super.initState();
     _selectionGestureDetectorBuilder =
-        _ReflectTextFieldSelectionGestureDetectorBuilder(
+        _TextFieldSelectionGestureDetectorBuilder(
       state: this,
     );
     if (widget.controller == null) {
@@ -1040,7 +1041,7 @@ class _ReflectTextFieldState extends State<ReflectTextField>
   }
 
   @override
-  void didUpdateWidget(ReflectTextField oldWidget) {
+  void didUpdateWidget(TextField oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller == null && oldWidget.controller != null) {
       _createLocalController(oldWidget.controller!.value);
@@ -1190,7 +1191,7 @@ class _ReflectTextFieldState extends State<ReflectTextField>
   }
 
   // Provide default behavior if widget.textAlignVertical is not set.
-  // ReflectTextField has top alignment by default, unless it has decoration
+  // TextField has top alignment by default, unless it has decoration
   // like a prefix or suffix, in which case it's aligned to the center.
   TextAlignVertical get _textAlignVertical {
     if (widget.textAlignVertical != null) {
@@ -1384,7 +1385,7 @@ class _ReflectTextFieldState extends State<ReflectTextField>
           maxLengthEnforcement: _effectiveMaxLengthEnforcement,
         ),
     ];
-    final CupertinoThemeData themeData = CupertinoTheme.of(context);
+    final ThemeData themeData = Theme.of(context);
 
     final TextStyle? resolvedStyle = widget.style?.copyWith(
       color: CupertinoDynamicColor.maybeResolve(widget.style?.color, context),
@@ -1393,7 +1394,7 @@ class _ReflectTextFieldState extends State<ReflectTextField>
     );
 
     final TextStyle textStyle =
-        themeData.textTheme.textStyle.merge(resolvedStyle);
+        themeData.textTheme.bodySmall!.merge(resolvedStyle);
 
     final TextStyle? resolvedPlaceholderStyle =
         widget.placeholderStyle?.copyWith(
@@ -1460,7 +1461,7 @@ class _ReflectTextFieldState extends State<ReflectTextField>
     // ensure that configuration uses Cupertino text style for misspelled words
     // unless a custom style is specified.
     final SpellCheckConfiguration spellCheckConfiguration =
-        ReflectTextField.inferIOSSpellCheckConfiguration(
+        TextField.inferIOSSpellCheckConfiguration(
       widget.spellCheckConfiguration,
     );
 
@@ -1495,7 +1496,7 @@ class _ReflectTextFieldState extends State<ReflectTextField>
             minLines: widget.minLines,
             expands: widget.expands,
             magnifierConfiguration: widget.magnifierConfiguration ??
-                ReflectTextField._iosMagnifierConfiguration,
+                TextField._iosMagnifierConfiguration,
             // Only show the selection highlight when the text field is focused.
             selectionColor:
                 _effectiveFocusNode.hasFocus ? selectionColor : null,
@@ -1603,76 +1604,4 @@ class _ReflectTextFieldState extends State<ReflectTextField>
       ),
     );
   }
-}
-
-class TextField extends ReflectTextField {
-  const TextField({
-    super.key,
-    super.groupId = EditableText,
-    super.controller,
-    super.focusNode,
-    super.undoController,
-    super.decoration,
-    super.padding,
-    super.placeholder,
-    super.placeholderStyle,
-    super.prefix,
-    super.prefixMode,
-    super.suffix,
-    super.suffixMode,
-    super.clearButtonMode,
-    super.clearButtonSemanticLabel,
-    super.keyboardType,
-    super.textInputAction,
-    super.textCapitalization,
-    super.style,
-    super.strutStyle,
-    super.textAlign,
-    super.textAlignVertical,
-    super.textDirection,
-    super.readOnly,
-    super.showCursor,
-    super.autofocus,
-    super.obscuringCharacter,
-    super.obscureText,
-    super.autocorrect,
-    super.smartDashesType,
-    super.smartQuotesType,
-    super.enableSuggestions,
-    super.maxLines,
-    super.minLines,
-    super.expands,
-    super.maxLength,
-    super.maxLengthEnforcement,
-    super.onChanged,
-    super.onEditingComplete,
-    super.onSubmitted,
-    super.onTapOutside,
-    super.inputFormatters,
-    super.enabled,
-    super.cursorWidth,
-    super.cursorHeight,
-    super.cursorRadius,
-    super.cursorOpacityAnimates,
-    super.cursorColor,
-    super.selectionHeightStyle,
-    super.selectionWidthStyle,
-    super.keyboardAppearance,
-    super.scrollPadding,
-    super.dragStartBehavior,
-    super.enableInteractiveSelection,
-    super.selectionControls,
-    super.onTap,
-    super.scrollController,
-    super.scrollPhysics,
-    super.autofillHints,
-    super.contentInsertionConfiguration,
-    super.clipBehavior,
-    super.restorationId,
-    super.scribbleEnabled,
-    super.enableIMEPersonalizedLearning,
-    super.contextMenuBuilder,
-    super.spellCheckConfiguration,
-    super.magnifierConfiguration,
-  });
 }

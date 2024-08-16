@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:reflect_ui/reflect_ui.dart';
 import 'package:storybook_dart/annotations.dart' as storybook;
 import 'package:storybook_dart/storybook_dart.dart';
 
@@ -14,7 +15,7 @@ class SwitchMeta extends Meta with _$SwitchMeta {
   Widget buildWidget(BuildContext context, List<Arg> args) {
     return StatefulBuilder(
       builder: (context, setState) {
-        return CupertinoSwitch(
+        return Switch(
           value: value,
           onChanged: (newValue) => setState(() {
             value = newValue;

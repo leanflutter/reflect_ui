@@ -4,13 +4,10 @@
 
 // ignore_for_file: require_trailing_commas
 
-import 'package:flutter/cupertino.dart'
-    show CupertinoColors, kMinInteractiveDimensionCupertino;
+import 'package:flutter/cupertino.dart' show CupertinoColors;
+import 'package:flutter/material.dart' show Theme, ThemeData;
 import 'package:flutter/widgets.dart';
-
-// Examples can assume:
-// bool _throwShotAway = false;
-// late StateSetter setState;
+import 'package:reflect_ui/src/constants.dart';
 
 // The relative values needed to transform a color to it's equivalent focus
 // outline color.
@@ -33,16 +30,16 @@ const double _kCupertinoFocusColorSaturation = 0.835;
 /// In the Apple Human Interface Guidelines (HIG), checkboxes are encouraged for
 /// use on macOS, but is silent about their use on iOS. If a multi-selection
 /// component is needed on iOS, the HIG encourages the developer to use switches
-/// ([CupertinoSwitch] in Flutter) instead, or to find a creative custom
+/// ([Switch] in Flutter) instead, or to find a creative custom
 /// solution.
 ///
 /// See also:
 ///
 ///  * [Checkbox], the Material Design equivalent.
-///  * [CupertinoSwitch], a widget with semantics similar to [ReflectCheckbox].
-///  * [CupertinoSlider], for selecting a value in a range.
+///  * [Switch], a widget with semantics similar to [Checkbox].
+///  * [Slider], for selecting a value in a range.
 ///  * <https://developer.apple.com/design/human-interface-guidelines/components/selection-and-input/toggles/>
-class ReflectCheckbox extends StatefulWidget {
+class Checkbox extends StatefulWidget {
   /// Creates a macOS-styled checkbox.
   ///
   /// The checkbox itself does not maintain any state. Instead, when the state of
@@ -57,7 +54,7 @@ class ReflectCheckbox extends StatefulWidget {
   ///   can only be null if [tristate] is true.
   /// * [onChanged], which is called when the value of the checkbox should
   ///   change. It can be set to null to disable the checkbox.
-  const ReflectCheckbox({
+  const Checkbox({
     super.key,
     required this.value,
     this.tristate = false,
@@ -98,7 +95,7 @@ class ReflectCheckbox extends StatefulWidget {
   /// gets rebuilt; for example:
   ///
   /// ```dart
-  /// ReflectCheckbox(
+  /// Checkbox(
   ///   value: _throwShotAway,
   ///   onChanged: (bool? newValue) {
   ///     setState(() {
@@ -126,7 +123,7 @@ class ReflectCheckbox extends StatefulWidget {
 
   /// If true, the checkbox's [value] can be true, false, or null.
   ///
-  /// [ReflectCheckbox] displays a dash when its value is null.
+  /// [Checkbox] displays a dash when its value is null.
   ///
   /// When a tri-state checkbox ([tristate] is true) is tapped, its [onChanged]
   /// callback will be applied to true if the current value is false, to null if
@@ -161,13 +158,13 @@ class ReflectCheckbox extends StatefulWidget {
   final OutlinedBorder? shape;
 
   /// The width of a checkbox widget.
-  static const double width = 18.0;
+  static const double width = 16.0;
 
   @override
-  State<ReflectCheckbox> createState() => _ReflectCheckboxState();
+  State<Checkbox> createState() => _CheckboxState();
 }
 
-class _ReflectCheckboxState extends State<ReflectCheckbox>
+class _CheckboxState extends State<Checkbox>
     with TickerProviderStateMixin, ToggleableStateMixin {
   final _CheckboxPainter _painter = _CheckboxPainter();
   bool? _previousValue;
@@ -181,7 +178,7 @@ class _ReflectCheckboxState extends State<ReflectCheckbox>
   }
 
   @override
-  void didUpdateWidget(ReflectCheckbox oldWidget) {
+  void didUpdateWidget(Checkbox oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.value != widget.value) {
       _previousValue = oldWidget.value;
@@ -211,11 +208,12 @@ class _ReflectCheckboxState extends State<ReflectCheckbox>
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     final Color effectiveActiveColor =
-        widget.activeColor ?? CupertinoColors.activeBlue;
-    final Color? inactiveColor = widget.inactiveColor;
+        widget.activeColor ?? themeData.primaryColor;
     final Color effectiveInactiveColor =
-        inactiveColor ?? CupertinoColors.inactiveGray;
+        widget.inactiveColor ?? CupertinoColors.inactiveGray;
 
     final Color effectiveFocusOverlayColor = widget.focusColor ??
         HSLColor.fromColor(
@@ -234,7 +232,7 @@ class _ReflectCheckboxState extends State<ReflectCheckbox>
         focusNode: widget.focusNode,
         autofocus: widget.autofocus,
         onFocusChange: onFocusChange,
-        size: const Size.square(kMinInteractiveDimensionCupertino),
+        size: const Size.square(kMinInteractiveDimensionReflect),
         painter: _painter
           ..focusColor = effectiveFocusOverlayColor
           ..isFocused = focused
@@ -307,7 +305,7 @@ class _CheckboxPainter extends ToggleablePainter {
   }
 
   Rect _outerRectAt(Offset origin) {
-    const double size = ReflectCheckbox.width;
+    const double size = Checkbox.width;
     final Rect rect = Rect.fromLTWH(origin.dx, origin.dy, size, size);
     return rect;
   }
@@ -323,7 +321,7 @@ class _CheckboxPainter extends ToggleablePainter {
     return Paint()
       ..color = checkColor
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.5
+      ..strokeWidth = 2.4
       ..strokeCap = StrokeCap.round;
   }
 
@@ -342,12 +340,9 @@ class _CheckboxPainter extends ToggleablePainter {
     // The ratios for the offsets below were found from looking at the checkbox
     // examples on in the HIG docs. The distance from the needed point to the
     // edge was measured, then divided by the total width.
-    const Offset start =
-        Offset(ReflectCheckbox.width * 0.25, ReflectCheckbox.width * 0.52);
-    const Offset mid =
-        Offset(ReflectCheckbox.width * 0.46, ReflectCheckbox.width * 0.75);
-    const Offset end =
-        Offset(ReflectCheckbox.width * 0.72, ReflectCheckbox.width * 0.29);
+    const Offset start = Offset(Checkbox.width * 0.28, Checkbox.width * 0.5);
+    const Offset mid = Offset(Checkbox.width * 0.43, Checkbox.width * 0.65);
+    const Offset end = Offset(Checkbox.width * 0.72, Checkbox.width * 0.35);
     path.moveTo(origin.dx + start.dx, origin.dy + start.dy);
     path.lineTo(origin.dx + mid.dx, origin.dy + mid.dy);
     canvas.drawPath(path, paint);
@@ -359,10 +354,8 @@ class _CheckboxPainter extends ToggleablePainter {
   void _drawDash(Canvas canvas, Offset origin, Paint paint) {
     // From measuring the checkbox example in the HIG docs, the dash was found
     // to be half the total width, centered in the middle.
-    const Offset start =
-        Offset(ReflectCheckbox.width * 0.25, ReflectCheckbox.width * 0.5);
-    const Offset end =
-        Offset(ReflectCheckbox.width * 0.75, ReflectCheckbox.width * 0.5);
+    const Offset start = Offset(Checkbox.width * 0.28, Checkbox.width * 0.5);
+    const Offset end = Offset(Checkbox.width * 0.72, Checkbox.width * 0.5);
     canvas.drawLine(origin + start, origin + end, paint);
   }
 
@@ -370,7 +363,7 @@ class _CheckboxPainter extends ToggleablePainter {
   void paint(Canvas canvas, Size size) {
     final Paint strokePaint = _createStrokePaint();
     final Offset origin =
-        size / 2.0 - const Size.square(ReflectCheckbox.width) / 2.0 as Offset;
+        size / 2.0 - const Size.square(Checkbox.width) / 2.0 as Offset;
 
     final Rect outer = _outerRectAt(origin);
     final Paint paint = Paint()..color = _colorAt(value ?? true);
@@ -398,21 +391,4 @@ class _CheckboxPainter extends ToggleablePainter {
       _drawBox(canvas, focusOuter, borderPaint, side, true);
     }
   }
-}
-
-class Checkbox extends ReflectCheckbox {
-  const Checkbox({
-    super.key,
-    required super.value,
-    super.tristate,
-    required super.onChanged,
-    super.activeColor,
-    super.inactiveColor,
-    super.checkColor,
-    super.focusColor,
-    super.focusNode,
-    super.autofocus,
-    super.side,
-    super.shape,
-  });
 }

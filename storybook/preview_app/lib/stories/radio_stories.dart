@@ -15,12 +15,23 @@ class RadioMeta extends Meta with _$RadioMeta {
   Widget buildWidget(BuildContext context, List<Arg> args) {
     return StatefulBuilder(
       builder: (context, setState) {
-        return ReflectRadio<String>(
-          value: '1',
-          groupValue: radioValue,
-          onChanged: (newValue) => setState(() {
-            radioValue = newValue!;
-          }),
+        return Column(
+          children: [
+            Radio<String>(
+              value: '1',
+              groupValue: radioValue,
+              onChanged: (newValue) => setState(() {
+                radioValue = newValue!;
+              }),
+            ),
+            Radio<String>(
+              value: '2',
+              groupValue: radioValue,
+              onChanged: (newValue) => setState(() {
+                radioValue = newValue!;
+              }),
+            ),
+          ],
         );
       },
     );

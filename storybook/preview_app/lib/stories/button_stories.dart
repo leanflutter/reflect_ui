@@ -11,6 +11,7 @@ part 'button_stories.g.dart';
   argTypes: [],
 )
 class ButtonMeta extends Meta with _$ButtonMeta {
+  String radioValue = '1';
   @override
   Widget buildWidget(BuildContext context, List<Arg> args) {
     return StatefulBuilder(
@@ -18,20 +19,75 @@ class ButtonMeta extends Meta with _$ButtonMeta {
         return Row(
           children: [
             Button(
+              variant: ButtonVariant.outlined,
+              // borderRadius: BorderRadius.zero,
+              onPressed: () {},
+              child: const Text('Text Button'),
+            ),
+            const SizedBox(width: 8),
+            Button(
+              // borderRadius: BorderRadius.zero,
               child: const Text('Text Button'),
               onPressed: () {},
             ),
             const SizedBox(width: 8),
-            Button(
-              variant: ButtonVariant.outlined,
-              child: const Text('Text Button'),
-              onPressed: () {},
+            const SizedBox(
+              width: 140,
+              child: TextField(
+                placeholder: 'Type something...',
+              ),
             ),
             const SizedBox(width: 8),
             Container(
               color: Colors.grey,
               height: 28,
               width: 28,
+            ),
+            Checkbox(
+              value: true,
+              onChanged: (newValue) => setState(() {
+                // value = newValue!;
+              }),
+              // shape: CircleBorder(),
+            ),
+            Checkbox(
+              value: false,
+              onChanged: (newValue) => setState(() {
+                // value = newValue!;
+              }),
+            ),
+            Checkbox(
+              value: null,
+              tristate: true,
+              onChanged: (newValue) => setState(() {
+                // value = newValue!;
+              }),
+            ),
+            Radio<String>(
+              value: '1',
+              groupValue: radioValue,
+              onChanged: (newValue) => setState(() {
+                radioValue = newValue!;
+              }),
+            ),
+            Radio<String>(
+              value: '2',
+              groupValue: radioValue,
+              onChanged: (newValue) => setState(() {
+                radioValue = newValue!;
+              }),
+            ),
+            Switch(
+              value: true,
+              onChanged: (newValue) => setState(() {
+                // value = newValue!;
+              }),
+            ),
+            Switch(
+              value: false,
+              onChanged: (newValue) => setState(() {
+                // value = newValue!;
+              }),
             ),
           ],
         );

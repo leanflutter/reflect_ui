@@ -15,7 +15,7 @@ class CheckboxMeta extends Meta with _$CheckboxMeta {
     bool value = false;
     return StatefulBuilder(
       builder: (context, setState) {
-        return ReflectCheckbox(
+        return Checkbox(
           value: value,
           onChanged: (newValue) => setState(() {
             value = newValue!;
