@@ -63,6 +63,15 @@ class ButtonMeta extends Meta with _$ButtonMeta {
                 // value = newValue!;
               }),
             ),
+            Badge(
+              variant: BadgeVariant.filled,
+              child: Text('1'),
+            ),
+            const SizedBox(width: 8),
+            Badge(
+              variant: BadgeVariant.outlined,
+              child: Text('99+'),
+            ),
             Radio<String>(
               value: '1',
               groupValue: radioValue,
