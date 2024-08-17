@@ -1,6 +1,15 @@
 library reflect_ui;
 
-export 'package:flutter/material.dart' show Scaffold;
+export 'package:flutter/material.dart'
+    show
+        Scaffold,
+        SelectableText,
+        TextTheme,
+        Theme,
+        ThemeData,
+        ThemeMode,
+        Brightness,
+        Tooltip;
 export 'package:flutter/widgets.dart';
 
 export 'src/widgets/alert/alert.dart';
