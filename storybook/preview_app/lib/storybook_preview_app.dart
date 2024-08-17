@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart'
-    show Colors, Divider, MaterialApp, SelectableText, Theme, ThemeData;
+    show Colors, MaterialApp, SelectableText, Theme, ThemeData;
 import 'package:flutter/widgets.dart';
 import 'package:preview_app/storybook_config.g.dart';
 import 'package:reflect_ui/reflect_ui.dart';

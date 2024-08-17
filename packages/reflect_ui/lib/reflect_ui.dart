@@ -1,6 +1,7 @@
 library reflect_ui;
 
 export 'package:flutter/material.dart' show Scaffold;
+export 'package:flutter/widgets.dart';
 
 export 'src/widgets/alert/alert.dart';
 export 'src/widgets/badge/badge.dart';
