@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' show Colors;
-import 'package:flutter/widgets.dart';
 import 'package:reflect_ui/reflect_ui.dart';
 import 'package:storybook_dart/annotations.dart' as storybook;
 import 'package:storybook_dart/storybook_dart.dart';
@@ -17,6 +16,7 @@ class ButtonMeta extends Meta with _$ButtonMeta {
     return StatefulBuilder(
       builder: (context, setState) {
         return Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Button(
               variant: ButtonVariant.outlined,
@@ -63,12 +63,12 @@ class ButtonMeta extends Meta with _$ButtonMeta {
                 // value = newValue!;
               }),
             ),
-            Badge(
+            const Badge(
               variant: BadgeVariant.filled,
               child: Text('1'),
             ),
             const SizedBox(width: 8),
-            Badge(
+            const Badge(
               variant: BadgeVariant.outlined,
               child: Text('99+'),
             ),

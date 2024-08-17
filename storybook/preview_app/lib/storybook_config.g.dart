@@ -1,5 +1,6 @@
 import 'package:preview_app/stories/badge_stories.dart';
 import 'package:preview_app/stories/button_stories.dart';
+import 'package:preview_app/stories/card_stories.dart';
 import 'package:preview_app/stories/checkbox_stories.dart';
 import 'package:preview_app/stories/divider_stories.dart';
 import 'package:preview_app/stories/loader_stories.dart';
@@ -13,6 +14,7 @@ final StorybookConfig storybookConfig = StorybookConfig(
   stories: [
     BadgeDefaultStory(),
     ButtonDefaultStory(),
+    CardDefaultStory(),
     CheckboxDefaultStory(),
     DividerDefaultStory(),
     LoaderDefaultStory(),

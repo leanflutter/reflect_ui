@@ -16,6 +16,7 @@ class BadgeMeta extends Meta with _$BadgeMeta {
       builder: (context, setState) {
         return GappedRow(
           gap: 8,
+          mainAxisSize: MainAxisSize.min,
           children: const [
             Badge(
               variant: BadgeVariant.filled,
