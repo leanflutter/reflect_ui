@@ -7,25 +7,32 @@ import 'package:flutter/painting.dart';
 
 const Color _kThumbBorderColor = Color(0x0A000000);
 
-const List<BoxShadow> _kSwitchBoxShadows = <BoxShadow>[
+const List<BoxShadow> _kSliderBoxShadows = <BoxShadow>[
   BoxShadow(
     color: Color(0x26000000),
     offset: Offset(0, 3),
     blurRadius: 8.0,
   ),
   BoxShadow(
-    color: Color(0x0F000000),
+    color: Color(0x29000000),
+    offset: Offset(0, 1),
+    blurRadius: 1.0,
+  ),
+  BoxShadow(
+    color: Color(0x1A000000),
     offset: Offset(0, 3),
     blurRadius: 1.0,
   ),
 ];
 
-/// Paints an iOS-style slider thumb or switch thumb.
-class SwitchThumbPainter {
+/// Paints an iOS-style slider thumb.
+///
+/// Used by [Slider].
+class SliderThumbPainter {
   /// Creates an object that paints an iOS-style slider thumb.
-  const SwitchThumbPainter({
+  const SliderThumbPainter({
     this.color = CupertinoColors.white,
-    this.shadows = _kSwitchBoxShadows,
+    this.shadows = _kSliderBoxShadows,
   });
 
   /// The color of the interior of the thumb.
@@ -35,7 +42,7 @@ class SwitchThumbPainter {
   final List<BoxShadow> shadows;
 
   /// Half the default diameter of the thumb.
-  static const double radius = 9.0;
+  static const double radius = 6.0;
 
   /// The default amount the thumb should be extended horizontally when pressed.
   static const double extension = 7.0;

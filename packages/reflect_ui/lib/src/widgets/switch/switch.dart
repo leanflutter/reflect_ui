@@ -542,7 +542,7 @@ class _RenderSwitch extends RenderConstrainedBox {
         _activeColor = activeColor,
         _trackColor = trackColor,
         _focusColor = focusColor,
-        _thumbPainter = SwitchThumbPainter.switchThumb(color: thumbColor),
+        _thumbPainter = SwitchThumbPainter(color: thumbColor),
         _onChanged = onChanged,
         _textDirection = textDirection,
         _isFocused = isFocused,
@@ -593,7 +593,7 @@ class _RenderSwitch extends RenderConstrainedBox {
     if (value == thumbColor) {
       return;
     }
-    _thumbPainter = SwitchThumbPainter.switchThumb(color: value);
+    _thumbPainter = SwitchThumbPainter(color: value);
     markNeedsPaint();
   }
 
