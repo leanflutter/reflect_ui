@@ -211,7 +211,7 @@ class _CheckboxState extends State<Checkbox>
     final ThemeData themeData = Theme.of(context);
 
     final Color effectiveActiveColor =
-        widget.activeColor ?? themeData.primaryColor;
+        widget.activeColor ?? themeData.colorScheme.primary;
     final Color effectiveInactiveColor =
         widget.inactiveColor ?? CupertinoColors.inactiveGray;
 

@@ -19,14 +19,31 @@ class ButtonMeta extends Meta with _$ButtonMeta {
           mainAxisSize: MainAxisSize.min,
           children: [
             Button(
-              variant: ButtonVariant.outlined,
-              // borderRadius: BorderRadius.zero,
+              variant: ButtonVariant.filled,
               onPressed: () {},
               child: const Text('Text Button'),
             ),
             const SizedBox(width: 8),
             Button(
-              // borderRadius: BorderRadius.zero,
+              variant: ButtonVariant.tinted,
+              child: const Text('Text Button'),
+              onPressed: () {},
+            ),
+            const SizedBox(width: 8),
+            Button(
+              variant: ButtonVariant.outlined,
+              child: const Text('Text Button'),
+              onPressed: () {},
+            ),
+            const SizedBox(width: 8),
+            Button(
+              variant: ButtonVariant.subtle,
+              child: const Text('Text Button'),
+              onPressed: () {},
+            ),
+            const SizedBox(width: 8),
+            Button(
+              variant: ButtonVariant.transparent,
               child: const Text('Text Button'),
               onPressed: () {},
             ),

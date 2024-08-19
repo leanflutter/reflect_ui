@@ -8,6 +8,12 @@ enum IconButtonVariant {
 
   /// Outlined button
   outlined,
+
+  /// Subtle button
+  subtle,
+
+  /// Transparent button
+  transparent,
 }
 
 class IconButton extends Button {
@@ -18,7 +24,7 @@ class IconButton extends Button {
     super.style,
     IconButtonVariant variant = IconButtonVariant.filled,
     super.kind,
-    super.padding,
+    super.padding = const EdgeInsets.all(1),
     super.color,
     super.disabledColor,
     super.minSize,
@@ -31,7 +37,12 @@ class IconButton extends Button {
     super.autofocus = false,
     required super.onPressed,
   }) : super(
-          child: iconBuilder != null ? iconBuilder(null, icon) : Icon(icon),
+          child: iconBuilder != null
+              ? iconBuilder(null, icon)
+              : Icon(
+                  icon,
+                  size: 20,
+                ),
           variant: ButtonVariant.values.firstWhere(
             (e) => e.name == variant.name,
           ),

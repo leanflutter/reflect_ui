@@ -73,7 +73,6 @@ class Switch extends StatefulWidget {
     this.activeColor,
     this.trackColor,
     this.thumbColor,
-    this.applyTheme,
     this.focusColor,
     this.onLabelColor,
     this.offLabelColor,
@@ -151,16 +150,6 @@ class Switch extends StatefulWidget {
 
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
-
-  /// {@template flutter.cupertino.Switch.applyTheme}
-  /// Whether to apply the ambient [CupertinoThemeData].
-  ///
-  /// If true, the track uses [CupertinoThemeData.primaryColor] for the track
-  /// when the switch is on.
-  ///
-  /// Defaults to [CupertinoThemeData.applyThemeToAll].
-  /// {@endtemplate}
-  final bool? applyTheme;
 
   /// {@template flutter.cupertino.Switch.dragStartBehavior}
   /// Determines the way that drag start behavior is handled.
@@ -366,7 +355,8 @@ class _SwitchState extends State<Switch> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    final Color activeColor = widget.activeColor ?? themeData.primaryColor;
+    final Color activeColor =
+        widget.activeColor ?? themeData.colorScheme.primary;
     final (Color onLabelColor, Color offLabelColor)? onOffLabelColors =
         MediaQuery.onOffSwitchLabelsOf(context)
             ? (

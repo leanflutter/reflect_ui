@@ -3,11 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:reflect_ui/src/widgets/button/button_style.dart';
 
 /// A style for filled buttons.
-class FilledButtonStyle extends ButtonStyle {
-  FilledButtonStyle(this.context);
+class TintedButtonStyle extends ButtonStyle {
+  TintedButtonStyle(this.context);
 
   final BuildContext context;
-
   late final ThemeData _themeData = Theme.of(context);
 
   @override
@@ -25,9 +24,15 @@ class FilledButtonStyle extends ButtonStyle {
     return WidgetStateProperty.resolveWith<Color?>(
       (Set<WidgetState> states) {
         if (color is MaterialColor) {
-          return color.shade600;
+          if (states.contains(WidgetState.hovered)) {
+            return color.shade100;
+          }
+          if (states.contains(WidgetState.pressed)) {
+            return color.shade200;
+          }
+          return color.shade50;
         }
-        return _themeData.colorScheme.primary;
+        return color;
       },
     );
   }
@@ -36,7 +41,7 @@ class FilledButtonStyle extends ButtonStyle {
   WidgetStateProperty<Color?>? get foregroundColor {
     return WidgetStateProperty.resolveWith<Color?>(
       (Set<WidgetState> states) {
-        return _themeData.colorScheme.onPrimary;
+        return _themeData.colorScheme.primary;
       },
     );
   }

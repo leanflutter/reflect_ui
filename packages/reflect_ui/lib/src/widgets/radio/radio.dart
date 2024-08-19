@@ -254,7 +254,7 @@ class _RadioState<T> extends State<Radio<T>>
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
     final Color effectiveActiveColor =
-        widget.activeColor ?? themeData.primaryColor;
+        widget.activeColor ?? themeData.colorScheme.primary;
     final Color effectiveInactiveColor =
         widget.inactiveColor ?? CupertinoColors.white;
 

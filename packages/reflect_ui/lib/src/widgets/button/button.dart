@@ -11,6 +11,9 @@ import 'package:reflect_ui/src/widgets/button/button_style.dart';
 import 'package:reflect_ui/src/widgets/button/button_variant.dart';
 import 'package:reflect_ui/src/widgets/button/filled_button_style.dart';
 import 'package:reflect_ui/src/widgets/button/outlined_button_style.dart';
+import 'package:reflect_ui/src/widgets/button/subtle_button_style.dart';
+import 'package:reflect_ui/src/widgets/button/tinted_button_style.dart';
+import 'package:reflect_ui/src/widgets/button/transparent_button_style.dart';
 
 export 'package:reflect_ui/src/widgets/button/button_variant.dart';
 
@@ -179,12 +182,14 @@ class _ButtonState extends State<Button> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _opacityAnimation;
 
-  late bool isFocused;
+  late bool _isHovered;
+  late bool _isFocused;
 
   @override
   void initState() {
     super.initState();
-    isFocused = false;
+    _isHovered = false;
+    _isFocused = false;
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 200),
       value: 0.0,
@@ -260,7 +265,7 @@ class _ButtonState extends State<Button> with SingleTickerProviderStateMixin {
 
   void _onShowFocusHighlight(bool showHighlight) {
     setState(() {
-      isFocused = showHighlight;
+      _isFocused = showHighlight;
     });
   }
 
@@ -273,14 +278,22 @@ class _ButtonState extends State<Button> with SingleTickerProviderStateMixin {
       switch (widget.variant) {
         case ButtonVariant.filled:
           style = FilledButtonStyle(context);
+        case ButtonVariant.tinted:
+          style = TintedButtonStyle(context);
         case ButtonVariant.outlined:
           style = OutlinedButtonStyle(context);
+        case ButtonVariant.subtle:
+          style = SubtleButtonStyle(context);
+        case ButtonVariant.transparent:
+          style = TransparentButtonStyle(context);
       }
     }
 
     Set<WidgetState> states = <WidgetState>{
+      if (_isHovered) WidgetState.hovered,
+      if (_isFocused) WidgetState.focused,
+      if (_buttonHeldDown) WidgetState.pressed,
       if (!enabled) WidgetState.disabled,
-      if (isFocused) WidgetState.focused,
     };
 
     final Color? backgroundColor = style.backgroundColor?.resolve(states);
@@ -294,6 +307,20 @@ class _ButtonState extends State<Button> with SingleTickerProviderStateMixin {
 
     return MouseRegion(
       cursor: enabled && kIsWeb ? SystemMouseCursors.click : MouseCursor.defer,
+      onEnter: (event) {
+        _isHovered = true;
+        setState(() {});
+      },
+      onExit: (event) {
+        _isHovered = false;
+        setState(() {});
+      },
+      onHover: (event) {
+        if (!_isHovered) {
+          _isHovered = true;
+          setState(() {});
+        }
+      },
       child: FocusableActionDetector(
         focusNode: widget.focusNode,
         autofocus: widget.autofocus,

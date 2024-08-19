@@ -1413,7 +1413,7 @@ class _TextFieldState extends State<TextField>
           widget.cursorColor ?? DefaultSelectionStyle.of(context).cursorColor,
           context,
         ) ??
-        themeData.primaryColor;
+        themeData.colorScheme.primary;
 
     final Color disabledColor =
         CupertinoDynamicColor.resolve(_kDisabledBackground, context);
@@ -1455,7 +1455,7 @@ class _TextFieldState extends State<TextField>
           DefaultSelectionStyle.of(context).selectionColor,
           context,
         ) ??
-        CupertinoTheme.of(context).primaryColor.withOpacity(0.2);
+        themeData.colorScheme.primary.withOpacity(0.2);
 
     // Set configuration as disabled if not otherwise specified. If specified,
     // ensure that configuration uses Cupertino text style for misspelled words

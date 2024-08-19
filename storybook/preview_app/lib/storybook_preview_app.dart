@@ -175,6 +175,9 @@ class StorybookPreviewApp extends StorybookPreviewer
   ThemeData get theme {
     ThemeData themeData = ThemeData.light();
     return themeData.copyWith(
+      colorScheme: themeData.colorScheme.copyWith(
+        primary: Colors.indigo,
+      ),
       textTheme: themeData.textTheme.copyWith(
         bodyLarge: _kBodyLargeTextStyle,
         bodyMedium: _kBodyMediumTextStyle,
