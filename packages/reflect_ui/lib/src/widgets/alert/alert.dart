@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+export 'alert_kind.dart';
+
 class Alert extends StatelessWidget {
   const Alert({super.key});
 

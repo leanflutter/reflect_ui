@@ -7,7 +7,7 @@
 import 'package:flutter/cupertino.dart' show CupertinoColors;
 import 'package:flutter/material.dart' show Theme, ThemeData;
 import 'package:flutter/widgets.dart';
-import 'package:reflect_ui/src/constants.dart';
+import 'package:reflect_ui/src/foundation/constants.dart';
 
 // The relative values needed to transform a color to it's equivalent focus
 // outline color.

@@ -1,0 +1,1 @@
+mixin WidgetKind on Enum {}

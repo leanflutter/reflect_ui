@@ -18,32 +18,62 @@ class ButtonMeta extends Meta with _$ButtonMeta {
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Container(
+              color: Colors.grey,
+              height: 28,
+              width: 28,
+            ),
             Button(
               variant: ButtonVariant.filled,
               onPressed: () {},
+              // borderRadius: BorderRadius.zero,
               child: const Text('Text Button'),
             ),
             const SizedBox(width: 8),
+            Container(
+              color: Colors.grey,
+              height: 28,
+              width: 28,
+            ),
             Button(
               variant: ButtonVariant.tinted,
+              // borderRadius: BorderRadius.zero,
               child: const Text('Text Button'),
               onPressed: () {},
             ),
             const SizedBox(width: 8),
+            Container(
+              color: Colors.grey,
+              height: 28,
+              width: 28,
+            ),
             Button(
               variant: ButtonVariant.outlined,
+              // borderRadius: BorderRadius.zero,
               child: const Text('Text Button'),
               onPressed: () {},
             ),
             const SizedBox(width: 8),
+            Container(
+              color: Colors.grey,
+              height: 28,
+              width: 28,
+            ),
             Button(
               variant: ButtonVariant.subtle,
+              // borderRadius: BorderRadius.zero,
               child: const Text('Text Button'),
               onPressed: () {},
             ),
             const SizedBox(width: 8),
+            Container(
+              color: Colors.grey,
+              height: 28,
+              width: 28,
+            ),
             Button(
               variant: ButtonVariant.transparent,
+              // borderRadius: BorderRadius.zero,
               child: const Text('Text Button'),
               onPressed: () {},
             ),

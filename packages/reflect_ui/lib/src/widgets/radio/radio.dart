@@ -7,7 +7,7 @@
 import 'package:flutter/cupertino.dart' show CupertinoColors;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:reflect_ui/src/constants.dart';
+import 'package:reflect_ui/src/foundation/constants.dart';
 
 // Examples can assume:
 // late BuildContext context;

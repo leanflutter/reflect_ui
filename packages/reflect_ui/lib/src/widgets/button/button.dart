@@ -4,17 +4,17 @@
 
 import 'package:flutter/cupertino.dart' show CupertinoColors;
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart' show TextTheme, Theme;
 import 'package:flutter/widgets.dart';
-import 'package:reflect_ui/src/constants.dart';
+import 'package:reflect_ui/src/foundation/constants.dart';
+import 'package:reflect_ui/src/painting/widget_base_style.dart';
+import 'package:reflect_ui/src/painting/widget_base_style_resolver.dart';
 import 'package:reflect_ui/src/widgets/button/button_kind.dart';
 import 'package:reflect_ui/src/widgets/button/button_style.dart';
 import 'package:reflect_ui/src/widgets/button/button_variant.dart';
-import 'package:reflect_ui/src/widgets/button/filled_button_style.dart';
-import 'package:reflect_ui/src/widgets/button/outlined_button_style.dart';
-import 'package:reflect_ui/src/widgets/button/subtle_button_style.dart';
-import 'package:reflect_ui/src/widgets/button/tinted_button_style.dart';
-import 'package:reflect_ui/src/widgets/button/transparent_button_style.dart';
 
+export 'package:reflect_ui/src/widgets/button/button_kind.dart';
+export 'package:reflect_ui/src/widgets/button/button_style.dart';
 export 'package:reflect_ui/src/widgets/button/button_variant.dart';
 
 // Measured against iOS 12 in Xcode.
@@ -185,6 +185,15 @@ class _ButtonState extends State<Button> with SingleTickerProviderStateMixin {
   late bool _isHovered;
   late bool _isFocused;
 
+  Set<WidgetState> get states {
+    return <WidgetState>{
+      if (_isHovered) WidgetState.hovered,
+      if (_isFocused) WidgetState.focused,
+      if (_buttonHeldDown) WidgetState.pressed,
+      if (!widget.enabled) WidgetState.disabled,
+    };
+  }
+
   @override
   void initState() {
     super.initState();
@@ -271,36 +280,32 @@ class _ButtonState extends State<Button> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     final bool enabled = widget.enabled;
 
+    final baseStyleResolver = WidgetBaseStyleResolver(context);
+    final WidgetBaseStyle baseStyle = baseStyleResolver.resolve(
+      widget.kind,
+      widget.variant,
+      color: widget.color,
+    );
+
     ButtonStyle? style = widget.style;
-    if (style == null) {
-      switch (widget.variant) {
-        case ButtonVariant.filled:
-          style = FilledButtonStyle(context);
-        case ButtonVariant.tinted:
-          style = TintedButtonStyle(context);
-        case ButtonVariant.outlined:
-          style = OutlinedButtonStyle(context);
-        case ButtonVariant.subtle:
-          style = SubtleButtonStyle(context);
-        case ButtonVariant.transparent:
-          style = TransparentButtonStyle(context);
-      }
-    }
 
-    Set<WidgetState> states = <WidgetState>{
-      if (_isHovered) WidgetState.hovered,
-      if (_isFocused) WidgetState.focused,
-      if (_buttonHeldDown) WidgetState.pressed,
-      if (!enabled) WidgetState.disabled,
-    };
-
-    final Color? backgroundColor = style.backgroundColor?.resolve(states);
-    final Color? foregroundColor = style.foregroundColor?.resolve(states);
-    final BorderSide? side = style.side?.resolve(states);
+    final Color? backgroundColor =
+        (style?.backgroundColor ?? baseStyle.backgroundColor)?.resolve(states);
+    final Color? foregroundColor =
+        (style?.foregroundColor ?? baseStyle.foregroundColor)?.resolve(states);
+    final Color? borderColor = (baseStyle.borderColor)?.resolve(states);
+    final BorderSide? side =
+        ((style?.side ?? baseStyle.side)?.resolve(states) ??
+            (borderColor != null
+                ? BorderSide(width: 1, color: borderColor)
+                : null));
     final TextStyle? textStyle =
-        style.textStyle?.resolve(states)?.copyWith(color: foregroundColor);
+        (style?.textStyle?.resolve(states) ?? textTheme.labelMedium)?.copyWith(
+      color: foregroundColor,
+    );
 
     final IconThemeData iconTheme =
         IconTheme.of(context).copyWith(color: foregroundColor);
@@ -359,13 +364,18 @@ class _ButtonState extends State<Button> with SingleTickerProviderStateMixin {
                       alignment: widget.alignment,
                       widthFactor: 1.0,
                       heightFactor: 1.0,
-                      child: DefaultTextStyle(
-                        style: textStyle!,
-                        child: IconTheme(
-                          data: iconTheme,
-                          child: widget.child,
-                        ),
-                      ),
+                      child: textStyle != null
+                          ? DefaultTextStyle(
+                              style: textStyle,
+                              child: IconTheme(
+                                data: iconTheme,
+                                child: widget.child,
+                              ),
+                            )
+                          : IconTheme(
+                              data: iconTheme,
+                              child: widget.child,
+                            ),
                     ),
                   ),
                 ),

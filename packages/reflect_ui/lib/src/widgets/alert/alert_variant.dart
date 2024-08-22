@@ -1,0 +1,4 @@
+enum AlertVariant {
+  filled,
+  outlined,
+}

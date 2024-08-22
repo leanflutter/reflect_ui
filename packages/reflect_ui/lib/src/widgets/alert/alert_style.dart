@@ -1,9 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:reflect_ui/src/painting/widget_base_style.dart';
 
-class ButtonStyle with Diagnosticable {
-  ButtonStyle({
+class AlertStyle with Diagnosticable {
+  AlertStyle({
     this.textStyle,
     this.backgroundColor,
     this.foregroundColor,
@@ -12,14 +11,6 @@ class ButtonStyle with Diagnosticable {
     this.side,
     this.shape,
   });
-
-  factory ButtonStyle.fromBaseStyle(WidgetBaseStyle baseStyle) {
-    return ButtonStyle(
-      backgroundColor: baseStyle.backgroundColor,
-      foregroundColor: baseStyle.foregroundColor,
-      side: baseStyle.side,
-    );
-  }
 
   /// The style for a button's [Text] widget descendants.
   ///
@@ -33,7 +24,7 @@ class ButtonStyle with Diagnosticable {
   /// The color for the button's [Text] and [Icon] widget descendants.
   ///
   /// This color is typically used instead of the color of the [textStyle]. All
-  /// of the components that compute defaults from [ButtonStyle] values
+  /// of the components that compute defaults from [AlertStyle] values
   /// compute a default [foregroundColor] and use that instead of the
   /// [textStyle]'s color.
   final WidgetStateProperty<Color?>? foregroundColor;

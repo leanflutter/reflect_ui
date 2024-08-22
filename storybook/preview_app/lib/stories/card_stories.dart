@@ -14,8 +14,15 @@ class CardMeta extends Meta with _$CardMeta {
   Widget buildWidget(BuildContext context, List<Arg> args) {
     return StatefulBuilder(
       builder: (context, setState) {
-        return const Card(
-          child: Text('Card'),
+        return Card(
+          child: Container(
+            width: 320,
+            height: 240,
+            padding: const EdgeInsets.all(16),
+            child: const Center(
+              child: Text('Card'),
+            ),
+          ),
         );
       },
     );

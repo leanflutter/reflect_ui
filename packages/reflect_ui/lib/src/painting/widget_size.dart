@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-class SemanticSize extends Size {
-  const SemanticSize(this.name) : super(0.0, 0.0);
+class WidgetSize extends Size {
+  const WidgetSize(this.name) : super(0.0, 0.0);
 
   final String name;
 
@@ -16,15 +16,15 @@ class SemanticSize extends Size {
     if (other.runtimeType != runtimeType) {
       return false;
     }
-    return other is SemanticSize && other.name == name;
+    return other is WidgetSize && other.name == name;
   }
 
   /// The size of the widget is small.
-  static const SemanticSize small = SemanticSize('small');
+  static const WidgetSize small = WidgetSize('small');
 
   /// The size of the widget is medium.
-  static const SemanticSize medium = SemanticSize('medium');
+  static const WidgetSize medium = WidgetSize('medium');
 
   /// The size of the widget is large.
-  static const SemanticSize large = SemanticSize('large');
+  static const WidgetSize large = WidgetSize('large');
 }

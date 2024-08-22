@@ -1,5 +1,7 @@
+import 'package:reflect_ui/src/painting/widget_kind.dart';
+
 /// An enum to define the kind of a button.
-enum ButtonKind {
+enum ButtonKind with WidgetKind {
   /// A button indicating a primary action.
   primary,
 
