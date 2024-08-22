@@ -1,0 +1,17 @@
+name: tailwind_colors
+description: "A Flutter package that provides a list of Tailwind CSS colors."
+version: 0.0.1
+homepage: https://github.com/leanflutter/reflect_ui/tree/main/packages/tailwind_colors
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.3.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mostly_reasonable_lints: ^0.1.2
