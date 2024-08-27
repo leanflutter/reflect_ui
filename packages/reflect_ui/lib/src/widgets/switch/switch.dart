@@ -16,10 +16,10 @@ import 'package:flutter/cupertino.dart'
     show CupertinoColors, CupertinoDynamicColor, CupertinoThemeData;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart' show Theme, ThemeData;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:reflect_ui/src/widgets/extended_theme/extended_theme.dart';
 import 'package:reflect_ui/src/widgets/switch/switch_thumb_painter.dart';
 
 /// An iOS-style switch.
@@ -354,9 +354,9 @@ class _SwitchState extends State<Switch> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
+    final ExtendedThemeData themeData = ExtendedTheme.of(context);
     final Color activeColor =
-        widget.activeColor ?? themeData.colorScheme.primary;
+        widget.activeColor ?? themeData.primaryColor;
     final (Color onLabelColor, Color offLabelColor)? onOffLabelColors =
         MediaQuery.onOffSwitchLabelsOf(context)
             ? (

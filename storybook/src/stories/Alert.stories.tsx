@@ -1,16 +1,16 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { Badge } from "./Badge";
+import { Alert } from "./Alert";
 
 const meta = {
-  title: "Widgets/Badge",
-  component: Badge,
+  title: "Widgets/Alert",
+  component: Alert,
   parameters: {
     layout: "centered",
   },
   argTypes: {
     label: { control: { type: "text" } },
   },
-} satisfies Meta<typeof Badge>;
+} satisfies Meta<typeof Alert>;
 
 export default meta
 type Story = StoryObj<typeof meta>

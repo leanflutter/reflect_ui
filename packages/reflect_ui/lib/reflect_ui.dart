@@ -28,6 +28,7 @@ export 'src/widgets/divided_column/divided_column.dart';
 export 'src/widgets/divided_row/divided_row.dart';
 export 'src/widgets/divider/divider.dart';
 export 'src/widgets/dropdown/dropdown.dart';
+export 'src/widgets/extended_theme/extended_theme.dart';
 export 'src/widgets/gapped_column/gapped_column.dart';
 export 'src/widgets/gapped_row/gapped_row.dart';
 export 'src/widgets/hoverable_area/hoverable_area.dart';

@@ -6,6 +6,7 @@ import 'package:preview_app/themes/light.dart';
 import 'package:reflect_ui/reflect_ui.dart';
 import 'package:storybook_dart/annotations.dart' as storybook;
 import 'package:storybook_dart/storybook_dart.dart';
+import 'package:tailwind_colors/tailwind_colors.dart';
 
 part 'storybook_preview_app.g.dart';
 
@@ -136,6 +137,27 @@ class StorybookPreviewApp extends StorybookPreviewer
       home: _HomePage(
         config: config,
       ),
+      builder: (context, child) {
+        child = ExtendedTheme(
+          data: ExtendedThemeData(
+            colors: ThemeBaseColors(
+              primary: TailwindColors.indigo,
+              secondary: TailwindColors.gray,
+              tertiary: TailwindColors.fuchsia,
+              success: TailwindColors.green,
+              danger: TailwindColors.red,
+              warning: TailwindColors.orange,
+              info: TailwindColors.blue,
+            ),
+            corners: const ThemeBaseCorners(),
+            shadows: const ThemeBaseShadows(),
+            spacing: const ThemeBaseSpacing(),
+            baseStyleResolver: WidgetBaseStyleResolver(),
+          ),
+          child: child!,
+        );
+        return child;
+      },
     );
   }
 }

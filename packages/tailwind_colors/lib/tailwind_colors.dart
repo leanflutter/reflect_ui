@@ -14,7 +14,7 @@ abstract final class TailwindColors {
   static const Color white = Color(0xFFFFFFFF);
 
   static const MaterialColor slate = MaterialColor(
-    0xff64748b,
+    0xff475569,
     <int, Color>{
       50: Color(0xfff8fafc),
       100: Color(0xfff1f5f9),
@@ -31,7 +31,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor gray = MaterialColor(
-    0xff6b7280,
+    0xff4b5563,
     <int, Color>{
       50: Color(0xfff9fafb),
       100: Color(0xfff3f4f6),
@@ -48,7 +48,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor zinc = MaterialColor(
-    0xff71717a,
+    0xff52525b,
     <int, Color>{
       50: Color(0xfffafafa),
       100: Color(0xfff4f4f5),
@@ -65,7 +65,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor neutral = MaterialColor(
-    0xff737373,
+    0xff525252,
     <int, Color>{
       50: Color(0xfffafafa),
       100: Color(0xfff5f5f5),
@@ -82,7 +82,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor stone = MaterialColor(
-    0xff78716c,
+    0xff57534e,
     <int, Color>{
       50: Color(0xfffafaf9),
       100: Color(0xfff5f5f4),
@@ -99,7 +99,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor red = MaterialColor(
-    0xffef4444,
+    0xffdc2626,
     <int, Color>{
       50: Color(0xfffef2f2),
       100: Color(0xfffee2e2),
@@ -116,7 +116,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor orange = MaterialColor(
-    0xfff97316,
+    0xffea580c,
     <int, Color>{
       50: Color(0xfffff7ed),
       100: Color(0xffffedd5),
@@ -133,7 +133,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor amber = MaterialColor(
-    0xfff59e0b,
+    0xffd97706,
     <int, Color>{
       50: Color(0xfffffbeb),
       100: Color(0xfffef3c7),
@@ -150,7 +150,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor yellow = MaterialColor(
-    0xffeab308,
+    0xffca8a04,
     <int, Color>{
       50: Color(0xfffefce8),
       100: Color(0xfffef9c3),
@@ -167,7 +167,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor lime = MaterialColor(
-    0xff84cc16,
+    0xff65a30d,
     <int, Color>{
       50: Color(0xfff7fee7),
       100: Color(0xffecfccb),
@@ -184,7 +184,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor green = MaterialColor(
-    0xff22c55e,
+    0xff16a34a,
     <int, Color>{
       50: Color(0xfff0fdf4),
       100: Color(0xffdcfce7),
@@ -201,7 +201,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor emerald = MaterialColor(
-    0xff10b981,
+    0xff059669,
     <int, Color>{
       50: Color(0xffecfdf5),
       100: Color(0xffd1fae5),
@@ -218,7 +218,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor teal = MaterialColor(
-    0xff14b8a6,
+    0xff0d9488,
     <int, Color>{
       50: Color(0xfff0fdfa),
       100: Color(0xffccfbf1),
@@ -235,7 +235,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor cyan = MaterialColor(
-    0xff06b6d4,
+    0xff0891b2,
     <int, Color>{
       50: Color(0xffecfeff),
       100: Color(0xffcffafe),
@@ -252,7 +252,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor sky = MaterialColor(
-    0xff0ea5e9,
+    0xff0284c7,
     <int, Color>{
       50: Color(0xfff0f9ff),
       100: Color(0xffe0f2fe),
@@ -269,7 +269,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor blue = MaterialColor(
-    0xff3b82f6,
+    0xff2563eb,
     <int, Color>{
       50: Color(0xffeff6ff),
       100: Color(0xffdbeafe),
@@ -286,7 +286,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor indigo = MaterialColor(
-    0xff6366f1,
+    0xff4f46e5,
     <int, Color>{
       50: Color(0xffeef2ff),
       100: Color(0xffe0e7ff),
@@ -303,7 +303,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor violet = MaterialColor(
-    0xff8b5cf6,
+    0xff7c3aed,
     <int, Color>{
       50: Color(0xfff5f3ff),
       100: Color(0xffede9fe),
@@ -320,7 +320,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor purple = MaterialColor(
-    0xffa855f7,
+    0xff9333ea,
     <int, Color>{
       50: Color(0xfffaf5ff),
       100: Color(0xfff3e8ff),
@@ -337,7 +337,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor fuchsia = MaterialColor(
-    0xffd946ef,
+    0xffc026d3,
     <int, Color>{
       50: Color(0xfffdf4ff),
       100: Color(0xfffae8ff),
@@ -354,7 +354,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor pink = MaterialColor(
-    0xffec4899,
+    0xffdb2777,
     <int, Color>{
       50: Color(0xfffdf2f8),
       100: Color(0xfffce7f3),
@@ -371,7 +371,7 @@ abstract final class TailwindColors {
   );
 
   static const MaterialColor rose = MaterialColor(
-    0xfff43f5e,
+    0xffe11d48,
     <int, Color>{
       50: Color(0xfffff1f2),
       100: Color(0xffffe4e6),

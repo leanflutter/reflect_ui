@@ -1,0 +1,3 @@
+class ThemeBaseShadows {
+  const ThemeBaseShadows();
+}

@@ -5,9 +5,9 @@
 // ignore_for_file: require_trailing_commas
 
 import 'package:flutter/cupertino.dart' show CupertinoColors;
-import 'package:flutter/material.dart' show Theme, ThemeData;
 import 'package:flutter/widgets.dart';
 import 'package:reflect_ui/src/foundation/constants.dart';
+import 'package:reflect_ui/src/widgets/extended_theme/extended_theme.dart';
 
 // The relative values needed to transform a color to it's equivalent focus
 // outline color.
@@ -208,10 +208,10 @@ class _CheckboxState extends State<Checkbox>
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
+    final ExtendedThemeData themeData = ExtendedTheme.of(context);
 
     final Color effectiveActiveColor =
-        widget.activeColor ?? themeData.colorScheme.primary;
+        widget.activeColor ?? themeData.primaryColor;
     final Color effectiveInactiveColor =
         widget.inactiveColor ?? CupertinoColors.inactiveGray;
 

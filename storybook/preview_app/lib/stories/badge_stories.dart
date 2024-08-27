@@ -6,7 +6,9 @@ part 'badge_stories.g.dart';
 
 @storybook.Meta(
   title: 'Widgets/Badge',
-  argTypes: [],
+  argTypes: [
+    storybook.ArgType('label'),
+  ],
 )
 class BadgeMeta extends Meta with _$BadgeMeta {
   String radioValue = '1';
@@ -23,7 +25,15 @@ class BadgeMeta extends Meta with _$BadgeMeta {
               child: Text('Badge'),
             ),
             Badge(
+              variant: BadgeVariant.tinted,
+              child: Text('Badge'),
+            ),
+            Badge(
               variant: BadgeVariant.outlined,
+              child: Text('Badge'),
+            ),
+            Badge(
+              variant: BadgeVariant.subtle,
               child: Text('Badge'),
             ),
           ],

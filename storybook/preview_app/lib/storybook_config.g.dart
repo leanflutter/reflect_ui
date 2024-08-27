@@ -1,3 +1,4 @@
+import 'package:preview_app/stories/alert_stories.dart';
 import 'package:preview_app/stories/badge_stories.dart';
 import 'package:preview_app/stories/button_stories.dart';
 import 'package:preview_app/stories/card_stories.dart';
@@ -12,6 +13,7 @@ import 'package:storybook_dart/storybook_dart.dart';
 
 final StorybookConfig storybookConfig = StorybookConfig(
   stories: [
+    AlertDefaultStory(),
     BadgeDefaultStory(),
     ButtonDefaultStory(),
     CardDefaultStory(),

@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart' show CupertinoColors;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:reflect_ui/src/foundation/constants.dart';
+import 'package:reflect_ui/src/widgets/extended_theme/extended_theme.dart';
 
 // Examples can assume:
 // late BuildContext context;
@@ -252,9 +253,9 @@ class _RadioState<T> extends State<Radio<T>>
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
+    final ExtendedThemeData themeData = ExtendedTheme.of(context);
     final Color effectiveActiveColor =
-        widget.activeColor ?? themeData.colorScheme.primary;
+        widget.activeColor ?? themeData.primaryColor;
     final Color effectiveInactiveColor =
         widget.inactiveColor ?? CupertinoColors.white;
 

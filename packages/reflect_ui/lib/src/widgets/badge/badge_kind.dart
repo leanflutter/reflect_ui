@@ -1,5 +1,7 @@
+import 'package:reflect_ui/src/painting/widget_kind.dart';
+
 /// An enum to define the kind of a badge.
-enum BadgeKind {
+enum BadgeKind with WidgetKind {
   /// A badge indicating a primary action.
   primary,
 
@@ -17,10 +19,4 @@ enum BadgeKind {
 
   /// A badge indicating an info.
   info,
-
-  /// A badge indicating a light.
-  light,
-
-  /// A badge indicating a dark.
-  dark,
 }

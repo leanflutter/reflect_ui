@@ -3,19 +3,20 @@
 // found in the LICENSE file.
 
 import 'package:flutter/cupertino.dart' show CupertinoColors;
+import 'package:flutter/material.dart' show TextTheme, Theme;
 import 'package:flutter/widgets.dart';
+import 'package:reflect_ui/src/painting/widget_base_style.dart';
 import 'package:reflect_ui/src/widgets/badge/badge_kind.dart';
 import 'package:reflect_ui/src/widgets/badge/badge_style.dart';
 import 'package:reflect_ui/src/widgets/badge/badge_variant.dart';
-import 'package:reflect_ui/src/widgets/badge/filled_badge_style.dart';
-import 'package:reflect_ui/src/widgets/badge/outlined_badge_style.dart';
+import 'package:reflect_ui/src/widgets/extended_theme/extended_theme.dart';
 
 export 'package:reflect_ui/src/widgets/badge/badge_variant.dart';
 
 // Measured against iOS 12 in Xcode.
 const EdgeInsets _kBadgePadding = EdgeInsets.all(16.0);
 const EdgeInsets _kBackgroundBadgePadding = EdgeInsets.symmetric(
-  vertical: 2.0,
+  vertical: 1.0,
   horizontal: 6.0,
 );
 
@@ -119,23 +120,37 @@ class Badge extends StatefulWidget {
 class _BadgeState extends State<Badge> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
+    final ExtendedThemeData themeData = ExtendedTheme.of(context);
+    final TextTheme textTheme = Theme.of(context).textTheme;
+
+    final WidgetBaseStyle baseStyle = themeData.baseStyleResolver.resolve(
+      context,
+      widget.kind,
+      widget.variant,
+      color: widget.color,
+    );
+
     BadgeStyle? style = widget.style;
-    if (style == null) {
-      switch (widget.variant) {
-        case BadgeVariant.filled:
-          style = FilledBadgeStyle(context);
-        case BadgeVariant.outlined:
-          style = OutlinedBadgeStyle(context);
-      }
-    }
 
     Set<WidgetState> states = <WidgetState>{};
 
-    final Color? backgroundColor = style.backgroundColor?.resolve(states);
-    final Color? foregroundColor = style.foregroundColor?.resolve(states);
-    final BorderSide? side = style.side?.resolve(states);
+    final Color? backgroundColor =
+        (style?.backgroundColor ?? baseStyle.backgroundColor)?.resolve(states);
+    final Color? foregroundColor =
+        (style?.foregroundColor ?? baseStyle.foregroundColor)?.resolve(states);
+    final Color? borderColor = (baseStyle.borderColor)?.resolve(states);
+    final BorderSide? side =
+        ((style?.side ?? baseStyle.side)?.resolve(states) ??
+            (borderColor != null
+                ? BorderSide(width: 1, color: borderColor)
+                : null));
     final TextStyle? textStyle =
-        style.textStyle?.resolve(states)?.copyWith(color: foregroundColor);
+        (style?.textStyle?.resolve(states) ?? textTheme.labelMedium)?.copyWith(
+      color: foregroundColor,
+      fontWeight: FontWeight.w500,
+      fontSize: 10,
+      // height: 12 / 10,
+    );
 
     final IconThemeData iconTheme =
         IconTheme.of(context).copyWith(color: foregroundColor);

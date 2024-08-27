@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:reflect_ui/src/painting/widget_base_style.dart';
 import 'package:reflect_ui/src/painting/widget_kind.dart';
 import 'package:reflect_ui/src/painting/widget_variant.dart';
+import 'package:reflect_ui/src/widgets/extended_theme/extended_theme.dart';
 
 class WidgetStateConfiguredColor extends WidgetStateProperty<Color> {
   WidgetStateConfiguredColor({
@@ -75,17 +75,14 @@ class WidgetStateConfiguredColor extends WidgetStateProperty<Color> {
 
 /// A resolver for the base style of a widget.
 class WidgetBaseStyleResolver {
-  const WidgetBaseStyleResolver(this.context);
-
-  final BuildContext context;
-
   /// Resolve the base style for a widget.
   WidgetBaseStyle resolve(
+    BuildContext context,
     WidgetKind kind,
     WidgetVariant variant, {
     Color? color,
   }) {
-    Color primaryColor = color ?? Theme.of(context).colorScheme.primary;
+    Color primaryColor = color ?? ExtendedTheme.of(context).colors.primary;
     switch (variant.name) {
       case WidgetVariant.filled:
         return WidgetBaseStyle(

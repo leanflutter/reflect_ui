@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'badge_stories.dart';
+part of 'alert_stories.dart';
 
 // **************************************************************************
 // MetaGenerator
 // **************************************************************************
 
-mixin _$BadgeMeta on Meta {
+mixin _$AlertMeta on Meta {
   @override
-  String get title => 'Widgets/Badge';
+  String get title => 'Widgets/Alert';
 
   @override
   List<ArgType> get argTypes {
@@ -20,10 +20,10 @@ mixin _$BadgeMeta on Meta {
 // StoryGenerator
 // **************************************************************************
 
-mixin _$BadgeDefaultStory on StoryObj<BadgeMeta> {
+mixin _$AlertDefaultStory on StoryObj<AlertMeta> {
   @override
   String get name => 'Default';
 
   @override
-  BadgeMeta get meta => BadgeMeta();
+  AlertMeta get meta => AlertMeta();
 }

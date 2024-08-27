@@ -7,11 +7,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' show TextTheme, Theme;
 import 'package:flutter/widgets.dart';
 import 'package:reflect_ui/src/foundation/constants.dart';
-import 'package:reflect_ui/src/painting/widget_base_style.dart';
-import 'package:reflect_ui/src/painting/widget_base_style_resolver.dart';
 import 'package:reflect_ui/src/widgets/button/button_kind.dart';
 import 'package:reflect_ui/src/widgets/button/button_style.dart';
 import 'package:reflect_ui/src/widgets/button/button_variant.dart';
+import 'package:reflect_ui/src/widgets/extended_theme/extended_theme.dart';
 
 export 'package:reflect_ui/src/widgets/button/button_kind.dart';
 export 'package:reflect_ui/src/widgets/button/button_style.dart';
@@ -280,30 +279,24 @@ class _ButtonState extends State<Button> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final ExtendedThemeData themeData = ExtendedTheme.of(context);
     final TextTheme textTheme = Theme.of(context).textTheme;
     final bool enabled = widget.enabled;
 
-    final baseStyleResolver = WidgetBaseStyleResolver(context);
-    final WidgetBaseStyle baseStyle = baseStyleResolver.resolve(
-      widget.kind,
-      widget.variant,
-      color: widget.color,
-    );
+    ButtonStyle style = widget.style ??
+        ButtonStyle.resolveWith(
+          themeData.baseStyleResolver,
+          widget.kind,
+          widget.variant,
+          color: widget.color,
+          context: context,
+        );
 
-    ButtonStyle? style = widget.style;
-
-    final Color? backgroundColor =
-        (style?.backgroundColor ?? baseStyle.backgroundColor)?.resolve(states);
-    final Color? foregroundColor =
-        (style?.foregroundColor ?? baseStyle.foregroundColor)?.resolve(states);
-    final Color? borderColor = (baseStyle.borderColor)?.resolve(states);
-    final BorderSide? side =
-        ((style?.side ?? baseStyle.side)?.resolve(states) ??
-            (borderColor != null
-                ? BorderSide(width: 1, color: borderColor)
-                : null));
+    final Color? backgroundColor = style.backgroundColor?.resolve(states);
+    final Color? foregroundColor = style.foregroundColor?.resolve(states);
+    final BorderSide? side = style.side?.resolve(states);
     final TextStyle? textStyle =
-        (style?.textStyle?.resolve(states) ?? textTheme.labelMedium)?.copyWith(
+        (style.textStyle?.resolve(states) ?? textTheme.labelMedium)?.copyWith(
       color: foregroundColor,
     );
 
