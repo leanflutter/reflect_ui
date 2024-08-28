@@ -6,7 +6,7 @@ import 'package:preview_app/themes/light.dart';
 import 'package:reflect_ui/reflect_ui.dart';
 import 'package:storybook_dart/annotations.dart' as storybook;
 import 'package:storybook_dart/storybook_dart.dart';
-import 'package:tailwind_colors/tailwind_colors.dart';
+import 'package:reflect_colors/reflect_colors.dart';
 
 part 'storybook_preview_app.g.dart';
 
@@ -35,7 +35,7 @@ class _HomePageState extends State<_HomePage> {
       child: Center(
         child: Container(
           padding: const EdgeInsets.all(16),
-          constraints: const BoxConstraints(maxWidth: 1200),
+          constraints: const BoxConstraints(maxWidth: 1440),
           child: Builder(
             builder: (context) {
               if (story == null) {
@@ -141,13 +141,12 @@ class StorybookPreviewApp extends StorybookPreviewer
         child = ExtendedTheme(
           data: ExtendedThemeData(
             colors: ThemeBaseColors(
-              primary: TailwindColors.indigo,
-              secondary: TailwindColors.gray,
-              tertiary: TailwindColors.fuchsia,
-              success: TailwindColors.green,
-              danger: TailwindColors.red,
-              warning: TailwindColors.orange,
-              info: TailwindColors.blue,
+              primary: ReflectColors.indigo,
+              secondary: ReflectColors.neutral,
+              success: ReflectColors.green,
+              danger: ReflectColors.red,
+              warning: ReflectColors.amber,
+              info: ReflectColors.sky,
             ),
             corners: const ThemeBaseCorners(),
             shadows: const ThemeBaseShadows(),

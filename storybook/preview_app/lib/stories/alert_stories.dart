@@ -1,3 +1,4 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:reflect_ui/reflect_ui.dart';
 import 'package:storybook_dart/annotations.dart' as storybook;
 import 'package:storybook_dart/storybook_dart.dart';
@@ -18,12 +19,13 @@ class AlertMeta extends Meta with _$AlertMeta {
         return SizedBox(
           width: 640,
           child: GappedColumn(
-            gap: 32,
+            gap: 20,
             mainAxisSize: MainAxisSize.min,
             children: const [
               Alert(
                 kind: AlertKind.success,
                 variant: AlertVariant.filled,
+                icon: Icon(FluentIcons.info_20_regular),
                 title: Text('Order completed'),
                 message: Text(
                   'Lorem ipsum dolor sit amet consectetur adipisicing elit. '
@@ -33,6 +35,7 @@ class AlertMeta extends Meta with _$AlertMeta {
               Alert(
                 kind: AlertKind.success,
                 variant: AlertVariant.tinted,
+                icon: Icon(FluentIcons.info_20_regular),
                 title: Text('Title'),
                 message: Text(
                   'A new software update is available. '
@@ -42,6 +45,7 @@ class AlertMeta extends Meta with _$AlertMeta {
               Alert(
                 kind: AlertKind.success,
                 variant: AlertVariant.outlined,
+                icon: Icon(FluentIcons.info_20_regular),
                 title: Text('There were 2 errors with your submission'),
                 message: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,3 +68,38 @@ class AlertMeta extends Meta with _$AlertMeta {
 
 @storybook.Story('Default')
 class AlertDefaultStory extends StoryObj<AlertMeta> with _$AlertDefaultStory {}
+
+@storybook.Story('With Variant')
+class AlertWithVariantStory extends StoryObj<AlertMeta>
+    with _$AlertWithVariantStory {
+  @override
+  Widget build(BuildContext context, List<Arg> args) {
+    return GappedColumn(
+      gap: 16,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (final variant in AlertVariant.values)
+          GappedRow(
+            gap: 16,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (final kind in AlertKind.values)
+                SizedBox(
+                  width: 300,
+                  child: Alert(
+                    kind: kind,
+                    variant: variant,
+                    icon: const Icon(FluentIcons.info_12_regular),
+                    title: const Text('New software update'),
+                    message: const Text(
+                      'A new software update is available. '
+                      'See what’s new in version 2.0.4.',
+                    ),
+                  ),
+                ),
+            ],
+          ),
+      ],
+    );
+  }
+}

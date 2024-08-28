@@ -19,10 +19,4 @@ enum ButtonKind with WidgetKind {
 
   /// A button indicating an info.
   info,
-
-  /// A button indicating a light.
-  light,
-
-  /// A button indicating a dark.
-  dark,
 }

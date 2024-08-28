@@ -14,8 +14,9 @@ class Alert extends StatefulWidget {
   const Alert({
     super.key,
     required this.kind,
-    required this.variant,
+    this.variant = AlertVariant.filled,
     this.style,
+    this.icon,
     this.title,
     this.message,
     this.actions,
@@ -26,6 +27,8 @@ class Alert extends StatefulWidget {
   final AlertVariant variant;
 
   final AlertStyle? style;
+
+  final Widget? icon;
 
   /// An optional title of the action sheet. When the [message] is non-null,
   /// the font of the [title] is bold.
@@ -74,20 +77,29 @@ class _AlertState extends State<Alert> {
                 ? BorderSide(width: 1, color: borderColor)
                 : null));
     final TextStyle? textStyle =
-        (style?.textStyle?.resolve(states) ?? textTheme.bodySmall)?.copyWith(
+        (style?.textStyle?.resolve(states) ?? textTheme.bodyMedium)?.copyWith(
       color: foregroundColor,
     );
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: backgroundColor,
         border: side != null ? Border.fromBorderSide(side) : null,
       ),
       child: GappedRow(
-        gap: 4,
+        gap: 8,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if (widget.icon != null)
+            IconTheme(
+              data: IconThemeData(
+                color: foregroundColor,
+                size: 18,
+              ),
+              child: widget.icon!,
+            ),
           Expanded(
             child: GappedColumn(
               gap: 4,
@@ -97,7 +109,7 @@ class _AlertState extends State<Alert> {
                 if (widget.title != null)
                   DefaultTextStyle(
                     style: textStyle!.copyWith(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                     ),
                     child: widget.title!,
                   ),
@@ -105,6 +117,11 @@ class _AlertState extends State<Alert> {
                   DefaultTextStyle(
                     style: textStyle!,
                     child: widget.message!,
+                  ),
+                if ((widget.actions ?? []).isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: GappedRow(gap: 8, children: widget.actions!),
                   ),
               ],
             ),

@@ -14,8 +14,12 @@ import 'package:storybook_dart/storybook_dart.dart';
 final StorybookConfig storybookConfig = StorybookConfig(
   stories: [
     AlertDefaultStory(),
+    AlertWithVariantStory(),
     BadgeDefaultStory(),
     ButtonDefaultStory(),
+    ButtonWithKindStory(),
+    ButtonWithVariantStory(),
+    ButtonWithSizeStory(),
     CardDefaultStory(),
     CheckboxDefaultStory(),
     DividerDefaultStory(),

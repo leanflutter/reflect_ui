@@ -1,25 +1,25 @@
 import 'package:reflect_ui/reflect_ui.dart';
-import 'package:tailwind_colors/tailwind_colors.dart';
+import 'package:reflect_colors/reflect_colors.dart';
 
 const String _kDefaultFontFamily = 'Inter';
 
 const TextStyle _kBodyLargeTextStyle = TextStyle(
   fontFamily: _kDefaultFontFamily,
-  color: TailwindColors.black,
+  color: ReflectColors.black,
   fontSize: 16,
   height: 20 / 16,
 );
 
 const TextStyle _kBodyMediumTextStyle = TextStyle(
   fontFamily: _kDefaultFontFamily,
-  color: TailwindColors.black,
+  color: ReflectColors.black,
   fontSize: 14,
   height: 18 / 14,
 );
 
 const TextStyle _kBodySmallTextStyle = TextStyle(
   fontFamily: _kDefaultFontFamily,
-  color: TailwindColors.black,
+  color: ReflectColors.black,
   fontSize: 12,
   height: 16 / 12,
 );
@@ -27,7 +27,7 @@ const TextStyle _kBodySmallTextStyle = TextStyle(
 const TextStyle _kLabelLargeTextStyle = TextStyle(
   fontFamily: _kDefaultFontFamily,
   fontWeight: FontWeight.w600,
-  color: TailwindColors.black,
+  color: ReflectColors.black,
   fontSize: 14,
   height: 18 / 14,
 );
@@ -35,7 +35,7 @@ const TextStyle _kLabelLargeTextStyle = TextStyle(
 const TextStyle _kLabelMediumTextStyle = TextStyle(
   fontFamily: _kDefaultFontFamily,
   fontWeight: FontWeight.w600,
-  color: TailwindColors.black,
+  color: ReflectColors.black,
   fontSize: 12,
   height: 16 / 12,
 );
@@ -43,7 +43,7 @@ const TextStyle _kLabelMediumTextStyle = TextStyle(
 const TextStyle _kLabelSmallTextStyle = TextStyle(
   fontFamily: _kDefaultFontFamily,
   fontWeight: FontWeight.w600,
-  color: TailwindColors.black,
+  color: ReflectColors.black,
   fontSize: 10,
   height: 14 / 10,
 );
@@ -52,7 +52,7 @@ final _lightThemeBase = ThemeData.light();
 
 final lightTheme = _lightThemeBase.copyWith(
   colorScheme: _lightThemeBase.colorScheme.copyWith(
-    primary: TailwindColors.blue,
+    primary: ReflectColors.blue,
     // onPrimary,
     // primaryContainer,
     // onPrimaryContainer,
@@ -85,13 +85,13 @@ final lightTheme = _lightThemeBase.copyWith(
     // surfaceDim,
     // surfaceBright,
     // surfaceContainerLowest,
-    surfaceContainerLow: TailwindColors.white,
+    surfaceContainerLow: ReflectColors.white,
     // surfaceContainer,
     // surfaceContainerHigh,
     // surfaceContainerHighest,
     // onSurfaceVariant,
-    outline: TailwindColors.gray.shade300,
-    outlineVariant: TailwindColors.gray.shade300,
+    outline: ReflectColors.gray.shade300,
+    outlineVariant: ReflectColors.gray.shade300,
     // shadow,
     // scrim,
     // inverseSurface,
@@ -99,7 +99,7 @@ final lightTheme = _lightThemeBase.copyWith(
     // inversePrimary,
     // surfaceTint,
   ),
-  scaffoldBackgroundColor: TailwindColors.gray.shade100,
+  scaffoldBackgroundColor: ReflectColors.gray.shade100,
   textTheme: _lightThemeBase.textTheme.copyWith(
     bodyLarge: _kBodyLargeTextStyle,
     bodyMedium: _kBodyMediumTextStyle,

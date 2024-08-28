@@ -82,12 +82,31 @@ class WidgetBaseStyleResolver {
     WidgetVariant variant, {
     Color? color,
   }) {
-    Color primaryColor = color ?? ExtendedTheme.of(context).colors.primary;
+    final themeData = ExtendedTheme.of(context);
+    late Color seedColor;
+    if (color != null) {
+      seedColor = color;
+    } else {
+      switch (kind.name) {
+        case WidgetKind.primary:
+          seedColor = themeData.colors.primary;
+        case WidgetKind.secondary:
+          seedColor = themeData.colors.secondary;
+        case WidgetKind.success:
+          seedColor = themeData.colors.success;
+        case WidgetKind.danger:
+          seedColor = themeData.colors.danger;
+        case WidgetKind.warning:
+          seedColor = themeData.colors.warning;
+        case WidgetKind.info:
+          seedColor = themeData.colors.info;
+      }
+    }
     switch (variant.name) {
       case WidgetVariant.filled:
         return WidgetBaseStyle(
           backgroundColor: WidgetStateConfiguredColor(
-            color: primaryColor,
+            color: seedColor,
             colorShade: 600,
             hoveredColorShade: 700,
             pressedColorShade: 700,
@@ -99,43 +118,43 @@ class WidgetBaseStyleResolver {
       case WidgetVariant.tinted:
         return WidgetBaseStyle(
           backgroundColor: WidgetStateConfiguredColor(
-            color: primaryColor,
+            color: seedColor,
             colorShade: 50,
             hoveredColorShade: 100,
             pressedColorShade: 100,
           ),
           foregroundColor: WidgetStateConfiguredColor(
-            color: primaryColor,
+            color: seedColor,
             colorShade: 600,
           ),
         );
       case WidgetVariant.outlined:
         return WidgetBaseStyle(
           backgroundColor: WidgetStateConfiguredColor(
-            color: primaryColor,
+            color: seedColor,
             colorShade: -1,
             hoveredColorShade: 50,
             pressedColorShade: 50,
           ),
           foregroundColor: WidgetStateConfiguredColor(
-            color: primaryColor,
+            color: seedColor,
             colorShade: 600,
           ),
           borderColor: WidgetStateConfiguredColor(
-            color: primaryColor,
+            color: seedColor,
             colorShade: 600,
           ),
         );
       case WidgetVariant.subtle:
         return WidgetBaseStyle(
           backgroundColor: WidgetStateConfiguredColor(
-            color: primaryColor,
+            color: seedColor,
             colorShade: -1,
             hoveredColorShade: 50,
             pressedColorShade: 50,
           ),
           foregroundColor: WidgetStateConfiguredColor(
-            color: primaryColor,
+            color: seedColor,
             colorShade: 600,
           ),
         );
@@ -145,7 +164,7 @@ class WidgetBaseStyleResolver {
             color: Colors.transparent,
           ),
           foregroundColor: WidgetStateConfiguredColor(
-            color: primaryColor,
+            color: seedColor,
             colorShade: 600,
           ),
         );

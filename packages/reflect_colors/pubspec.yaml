@@ -1,7 +1,7 @@
-name: tailwind_colors
-description: "A Flutter package that provides a list of Tailwind CSS colors."
+name: reflect_colors
+description: "A color palette for Reflect UI. based on the Tailwind CSS color palette."
 version: 0.0.1
-homepage: https://github.com/leanflutter/reflect_ui/tree/main/packages/tailwind_colors
+homepage: https://github.com/leanflutter/reflect_ui/tree/main/packages/reflect_colors
 
 environment:
   sdk: ">=3.0.0 <4.0.0"

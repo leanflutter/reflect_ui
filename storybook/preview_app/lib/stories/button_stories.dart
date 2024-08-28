@@ -155,3 +155,63 @@ class ButtonMeta extends Meta with _$ButtonMeta {
 @storybook.Story('Default')
 class ButtonDefaultStory extends StoryObj<ButtonMeta>
     with _$ButtonDefaultStory {}
+
+@storybook.Story('With Kind')
+class ButtonWithKindStory extends StoryObj<ButtonMeta>
+    with _$ButtonWithKindStory {
+  @override
+  Widget build(BuildContext context, List<Arg> args) {
+    return GappedColumn(
+      gap: 16,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (final kind in ButtonKind.values)
+          GappedRow(
+            gap: 16,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (final variant in ButtonVariant.values)
+                Button(
+                  kind: kind,
+                  variant: variant,
+                  onPressed: () {},
+                  child: const Text('Text Button'),
+                ),
+            ],
+          ),
+      ],
+    );
+  }
+}
+
+@storybook.Story('With Variant')
+class ButtonWithVariantStory extends StoryObj<ButtonMeta>
+    with _$ButtonWithVariantStory {
+  @override
+  Widget build(BuildContext context, List<Arg> args) {
+    return GappedColumn(
+      gap: 16,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (final variant in ButtonVariant.values)
+          GappedRow(
+            gap: 16,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (final kind in ButtonKind.values)
+                Button(
+                  kind: kind,
+                  variant: variant,
+                  onPressed: () {},
+                  child: const Text('Text Button'),
+                ),
+            ],
+          ),
+      ],
+    );
+  }
+}
+
+@storybook.Story('With Size')
+class ButtonWithSizeStory extends StoryObj<ButtonMeta>
+    with _$ButtonWithSizeStory {}

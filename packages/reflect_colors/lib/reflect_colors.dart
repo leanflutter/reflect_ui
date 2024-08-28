@@ -1,9 +1,9 @@
-library tailwind_colors;
+library reflect_colors;
 
 import 'package:flutter/material.dart' show MaterialColor;
 import 'package:flutter/painting.dart';
 
-abstract final class TailwindColors {
+abstract final class ReflectColors {
   /// Completely invisible.
   static const Color transparent = Color(0x00000000);
 

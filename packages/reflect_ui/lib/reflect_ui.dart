@@ -3,6 +3,7 @@ library reflect_ui;
 export 'package:flutter/material.dart'
     show
         Brightness,
+        Colors,
         Scaffold,
         SelectableText,
         TextTheme,

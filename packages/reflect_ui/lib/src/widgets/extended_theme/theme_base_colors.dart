@@ -4,7 +4,6 @@ class ThemeBaseColors {
   ThemeBaseColors({
     required this.primary,
     required this.secondary,
-    required this.tertiary,
     required this.success,
     required this.danger,
     required this.warning,
@@ -13,7 +12,6 @@ class ThemeBaseColors {
 
   final Color primary;
   final Color secondary;
-  final Color tertiary;
   final Color success;
   final Color danger;
   final Color warning;

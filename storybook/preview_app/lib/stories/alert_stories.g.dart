@@ -27,3 +27,11 @@ mixin _$AlertDefaultStory on StoryObj<AlertMeta> {
   @override
   AlertMeta get meta => AlertMeta();
 }
+
+mixin _$AlertWithVariantStory on StoryObj<AlertMeta> {
+  @override
+  String get name => 'With Variant';
+
+  @override
+  AlertMeta get meta => AlertMeta();
+}
