@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart' show Colors;
 import 'package:reflect_ui/reflect_ui.dart';
 import 'package:storybook_dart/annotations.dart' as storybook;
 import 'package:storybook_dart/storybook_dart.dart';

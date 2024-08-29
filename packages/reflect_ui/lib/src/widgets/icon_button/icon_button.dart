@@ -1,30 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:reflect_ui/src/painting/widget_variant.dart';
 import 'package:reflect_ui/src/widgets/button/button.dart';
 
-enum IconButtonVariant {
-  /// Filled button
+enum IconButtonVariant with WidgetVariant {
   filled,
-
-  /// Outlined button
+  tinted,
   outlined,
-
-  /// Subtle button
   subtle,
-
-  /// Transparent button
   transparent,
 }
 
 class IconButton extends Button {
   IconButton(
     IconData icon, {
-    Function(BuildContext? context, IconData icon)? iconBuilder,
     super.key,
+    Function(BuildContext? context, IconData icon)? iconBuilder,
+    Color? iconColor,
+    double? iconSize,
     super.style,
     IconButtonVariant variant = IconButtonVariant.filled,
     super.kind,
-    super.padding = const EdgeInsets.all(1),
+    super.padding = const EdgeInsets.all(2),
     super.color,
     super.disabledColor,
     super.minSize,
@@ -41,7 +38,8 @@ class IconButton extends Button {
               ? iconBuilder(null, icon)
               : Icon(
                   icon,
-                  size: 20,
+                  size: iconSize ?? 22,
+                  color: iconColor,
                 ),
           variant: ButtonVariant.values.firstWhere(
             (e) => e.name == variant.name,

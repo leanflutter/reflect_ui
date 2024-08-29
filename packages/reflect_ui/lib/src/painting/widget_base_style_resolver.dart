@@ -83,6 +83,7 @@ class WidgetBaseStyleResolver {
     Color? color,
   }) {
     final themeData = ExtendedTheme.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     late Color seedColor;
     if (color != null) {
       seedColor = color;
@@ -119,9 +120,12 @@ class WidgetBaseStyleResolver {
         return WidgetBaseStyle(
           backgroundColor: WidgetStateConfiguredColor(
             color: seedColor,
-            colorShade: 50,
-            hoveredColorShade: 100,
-            pressedColorShade: 100,
+            colorShade: !isDark ? 50 : null,
+            colorOpacity: isDark ? 0.15 : null,
+            hoveredColorShade: !isDark ? 100 : null,
+            hoveredColorOpacity: isDark ? 0.2 : null,
+            pressedColorShade: !isDark ? 100 : null,
+            pressedColorOpacity: isDark ? 0.2 : null,
           ),
           foregroundColor: WidgetStateConfiguredColor(
             color: seedColor,
@@ -133,8 +137,10 @@ class WidgetBaseStyleResolver {
           backgroundColor: WidgetStateConfiguredColor(
             color: seedColor,
             colorShade: -1,
-            hoveredColorShade: 50,
-            pressedColorShade: 50,
+            hoveredColorShade: !isDark ? 50 : null,
+            hoveredColorOpacity: isDark ? 0.2 : null,
+            pressedColorShade: !isDark ? 50 : null,
+            pressedColorOpacity: isDark ? 0.2 : null,
           ),
           foregroundColor: WidgetStateConfiguredColor(
             color: seedColor,
@@ -150,8 +156,10 @@ class WidgetBaseStyleResolver {
           backgroundColor: WidgetStateConfiguredColor(
             color: seedColor,
             colorShade: -1,
-            hoveredColorShade: 50,
-            pressedColorShade: 50,
+            hoveredColorShade: !isDark ? 50 : null,
+            hoveredColorOpacity: isDark ? 0.2 : null,
+            pressedColorShade: !isDark ? 50 : null,
+            pressedColorOpacity: isDark ? 0.2 : null,
           ),
           foregroundColor: WidgetStateConfiguredColor(
             color: seedColor,
