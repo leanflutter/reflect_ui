@@ -2,92 +2,48 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/cupertino.dart'
-    show CupertinoColors, CupertinoDynamicColor, CupertinoTheme;
+import 'package:flutter/cupertino.dart' show CupertinoColors;
+import 'package:flutter/material.dart' show TextTheme, Theme, ThemeData;
 import 'package:flutter/widgets.dart';
 
 // Margin on top of the list section. This was eyeballed from iOS 14.4 Simulator
 // and should be always present on top of the edge-to-edge variant.
-const double _kMarginTop = 22.0;
-
-// Standard header margin, determined from SwiftUI's Forms in iOS 14.2 SDK.
-const EdgeInsetsDirectional _kDefaultHeaderMargin =
-    EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 6.0);
+const double _kMarginTop = 12.0;
 
 // Header margin for inset grouped variant, determined from iOS 14.4 Simulator.
 const EdgeInsetsDirectional _kInsetGroupedDefaultHeaderMargin =
     EdgeInsetsDirectional.fromSTEB(20.0, 16.0, 20.0, 6.0);
 
-// Standard footer margin, determined from SwiftUI's Forms in iOS 14.2 SDK.
-const EdgeInsetsDirectional _kDefaultFooterMargin =
-    EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0);
-
 // Footer margin for inset grouped variant, determined from iOS 14.4 Simulator.
 const EdgeInsetsDirectional _kInsetGroupedDefaultFooterMargin =
     EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 10.0);
 
-// Margin around children in edge-to-edge variant, determined from iOS 14.4
-// Simulator.
-const EdgeInsets _kDefaultRowsMargin = EdgeInsets.only(bottom: 8.0);
+// Used for iOS "Inset Grouped" margin, determined from SwiftUI's Forms in
+// iOS 14.2 SDK.
+const EdgeInsetsDirectional _kDefaultRowsMargin =
+    EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 10.0);
 
 // Used for iOS "Inset Grouped" margin, determined from SwiftUI's Forms in
 // iOS 14.2 SDK.
-const EdgeInsetsDirectional _kDefaultInsetGroupedRowsMargin =
-    EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 10.0);
-
-// Used for iOS "Inset Grouped" margin, determined from SwiftUI's Forms in
-// iOS 14.2 SDK.
-const EdgeInsetsDirectional _kDefaultInsetGroupedRowsMarginWithHeader =
-    EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 10.0);
+const EdgeInsetsDirectional _kDefaultRowsMarginWithHeader =
+    EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 10.0);
 
 // Used for iOS "Inset Grouped" border radius, estimated from SwiftUI's Forms in
 // iOS 14.2 SDK.
-// TODO(edrisian): This should be a rounded rectangle once that shape is added.
 const BorderRadius _kDefaultInsetGroupedBorderRadius =
     BorderRadius.all(Radius.circular(10.0));
 
 // The margin of divider used in base list section. Estimated from iOS 14.4 SDK
 // Settings app.
-const double _kBaseDividerMargin = 20.0;
-
-// Additional margin of divider used in base list section with list tiles with
-// leading widgets. Estimated from iOS 14.4 SDK Settings app.
-const double _kBaseAdditionalDividerMargin = 44.0;
-
-// The margin of divider used in inset grouped version of list section.
-// Estimated from iOS 14.4 SDK Reminders app.
-const double _kInsetDividerMargin = 14.0;
+const double _kDefaultDividerMargin = 12.0;
 
 // Additional margin of divider used in inset grouped version of list section.
 // Estimated from iOS 14.4 SDK Reminders app.
-const double _kInsetAdditionalDividerMargin = 42.0;
+const double _kDefaultAdditionalDividerMargin = 28.0;
 
 // Additional margin of divider used in inset grouped version of list section
 // when there is no leading widgets. Estimated from iOS 14.4 SDK Notes app.
-const double _kInsetAdditionalDividerMarginWithoutLeading = 14.0;
-
-// Color of header and footer text in edge-to-edge variant.
-const Color _kHeaderFooterColor = CupertinoDynamicColor(
-  color: Color.fromRGBO(108, 108, 108, 1.0),
-  darkColor: Color.fromRGBO(142, 142, 146, 1.0),
-  highContrastColor: Color.fromRGBO(74, 74, 77, 1.0),
-  darkHighContrastColor: Color.fromRGBO(176, 176, 183, 1.0),
-  elevatedColor: Color.fromRGBO(108, 108, 108, 1.0),
-  darkElevatedColor: Color.fromRGBO(142, 142, 146, 1.0),
-  highContrastElevatedColor: Color.fromRGBO(108, 108, 108, 1.0),
-  darkHighContrastElevatedColor: Color.fromRGBO(142, 142, 146, 1.0),
-);
-
-/// Denotes what type of the list section a [ListSection] is.
-///
-/// This is for internal use only.
-enum ListSectionType {
-  /// A basic form of [ListSection].
-  base,
-
-  /// An inset-grouped style of [ListSection].
-  insetGrouped,
-}
+const double _kDefaultAdditionalDividerMarginWithoutLeading = 0.0;
 
 /// An iOS-style list section.
 ///
@@ -209,96 +165,24 @@ class ListSection extends StatelessWidget {
     this.children,
     this.header,
     this.footer,
-    this.margin = _kDefaultRowsMargin,
+    EdgeInsetsGeometry? margin,
     this.backgroundColor = CupertinoColors.systemGroupedBackground,
     this.decoration,
-    this.clipBehavior = Clip.none,
-    this.dividerMargin = _kBaseDividerMargin,
+    this.clipBehavior = Clip.hardEdge,
+    this.dividerMargin = _kDefaultDividerMargin,
     double? additionalDividerMargin,
     this.topMargin = _kMarginTop,
     bool hasLeading = true,
     this.separatorColor,
   })  : assert((children != null && children.length > 0) || header != null),
-        type = ListSectionType.base,
-        additionalDividerMargin = additionalDividerMargin ??
-            (hasLeading ? _kBaseAdditionalDividerMargin : 0.0);
-
-  /// Creates a section that mimics standard "Inset Grouped" iOS list section.
-  ///
-  /// The [ListSection.insetGrouped] constructor creates a round-edged
-  /// and padded section that is seen in iOS Notes and Reminders apps. It creates
-  /// an iOS-style header, and the dividers between rows. Does not create borders
-  /// on top and bottom of the rows.
-  ///
-  /// The [header] parameter sets the form section header. The section header
-  /// lies above the [children] rows, with margins that match the iOS style.
-  ///
-  /// The [footer] parameter sets the form section footer. The section footer
-  /// lies below the [children] rows.
-  ///
-  /// The [children] parameter is required and sets the list of rows shown in
-  /// the section. The [children] parameter takes a list, as opposed to a more
-  /// efficient builder function that lazy builds, because forms are intended to
-  /// be short in row count. It is recommended that only [ListTile]
-  /// widget be included in the [children] list in order to retain the iOS look.
-  ///
-  /// The [margin] parameter sets the spacing around the content area of the
-  /// section encapsulating [children], and defaults to the standard
-  /// notched-style iOS form padding.
-  ///
-  /// The [decoration] parameter sets the decoration around [children].
-  /// If null, defaults to [CupertinoColors.secondarySystemGroupedBackground].
-  /// If null, defaults to 10.0 circular radius when constructing with
-  /// [ListSection.insetGrouped]. Defaults to zero radius for the
-  /// standard [ListSection] constructor.
-  ///
-  /// The [backgroundColor] parameter sets the background color behind the
-  /// section. If null, defaults to [CupertinoColors.systemGroupedBackground].
-  ///
-  /// The [dividerMargin] parameter sets the starting offset of the divider
-  /// between rows.
-  ///
-  /// The [additionalDividerMargin] parameter adds additional margin to existing
-  /// [dividerMargin] when [hasLeading] is set to true. By default, it offsets
-  /// for the width of leading and space between leading and title of
-  /// [ListTile], but it can be overwritten for custom look.
-  ///
-  /// The [hasLeading] parameter specifies whether children [ListTile]
-  /// widgets contain leading or not. Used for calculating correct starting
-  /// margin for the divider between rows.
-  ///
-  /// {@macro flutter.material.Material.clipBehavior}
-  const ListSection.insetGrouped({
-    super.key,
-    this.children,
-    this.header,
-    this.footer,
-    EdgeInsetsGeometry? margin,
-    this.backgroundColor = CupertinoColors.systemGroupedBackground,
-    this.decoration,
-    this.clipBehavior = Clip.hardEdge,
-    this.dividerMargin = _kInsetDividerMargin,
-    double? additionalDividerMargin,
-    this.topMargin,
-    bool hasLeading = true,
-    this.separatorColor,
-  })  : assert((children != null && children.length > 0) || header != null),
-        type = ListSectionType.insetGrouped,
         additionalDividerMargin = additionalDividerMargin ??
             (hasLeading
-                ? _kInsetAdditionalDividerMargin
-                : _kInsetAdditionalDividerMarginWithoutLeading),
+                ? _kDefaultAdditionalDividerMargin
+                : _kDefaultAdditionalDividerMarginWithoutLeading),
         margin = margin ??
             (header == null
-                ? _kDefaultInsetGroupedRowsMargin
-                : _kDefaultInsetGroupedRowsMarginWithHeader);
-
-  /// The type of list section, either base or inset grouped.
-  ///
-  /// This member is public for testing purposes only and cannot be set
-  /// manually. Instead, use a corresponding constructors.
-  @visibleForTesting
-  final ListSectionType type;
+                ? _kDefaultRowsMargin
+                : _kDefaultRowsMarginWithHeader);
 
   /// Sets the form section header. The section header lies above the [children]
   /// rows. Usually a [Text] widget.
@@ -363,64 +247,41 @@ class ListSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color dividerColor =
-        separatorColor ?? CupertinoColors.separator.resolveFrom(context);
-    final double dividerHeight = 1.0 / MediaQuery.devicePixelRatioOf(context);
+    ThemeData themeData = Theme.of(context);
+    TextTheme textTheme = themeData.textTheme;
 
-    // Long divider is used for wrapping the top and bottom of rows.
-    // Only used in ListSectionType.base mode.
-    final Widget longDivider = Container(
-      color: dividerColor,
-      height: dividerHeight,
-    );
+    final Color dividerColor =
+        separatorColor ?? themeData.colorScheme.outlineVariant;
 
     // Short divider is used between rows.
     final Widget shortDivider = Container(
       margin: EdgeInsetsDirectional.only(
-          start: dividerMargin + additionalDividerMargin),
+        start: dividerMargin + additionalDividerMargin,
+      ),
       color: dividerColor,
-      height: dividerHeight,
+      height: 1,
     );
 
-    TextStyle style = CupertinoTheme.of(context).textTheme.textStyle;
-
     Widget? headerWidget, footerWidget;
-    switch (type) {
-      case ListSectionType.base:
-        style = style.merge(TextStyle(
-          fontSize: 13.0,
-          color: CupertinoDynamicColor.resolve(_kHeaderFooterColor, context),
-        ));
-        if (header != null) {
-          headerWidget = DefaultTextStyle(style: style, child: header!);
-        }
-        if (footer != null) {
-          footerWidget = DefaultTextStyle(style: style, child: footer!);
-        }
-      case ListSectionType.insetGrouped:
-        if (header != null) {
-          headerWidget = DefaultTextStyle(
-            style: style.merge(
-                const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
-            child: header!,
-          );
-        }
-        if (footer != null) {
-          footerWidget = DefaultTextStyle(style: style, child: footer!);
-        }
+
+    if (header != null) {
+      headerWidget = DefaultTextStyle(
+        style: textTheme.bodySmall!.copyWith(fontWeight: FontWeight.bold),
+        child: header!,
+      );
+    }
+    if (footer != null) {
+      footerWidget = DefaultTextStyle(
+        style: textTheme.bodySmall!.copyWith(fontWeight: FontWeight.normal),
+        child: footer!,
+      );
     }
 
     Widget? decoratedChildrenGroup;
     if (children != null && children!.isNotEmpty) {
       // We construct childrenWithDividers as follows:
       // Insert a short divider between all rows.
-      // If it is a `ListSectionType.base` type, add a long divider
-      // to the top and bottom of the rows.
       final List<Widget> childrenWithDividers = <Widget>[];
-
-      if (type == ListSectionType.base) {
-        childrenWithDividers.add(longDivider);
-      }
 
       children!.sublist(0, children!.length - 1).forEach((Widget widget) {
         childrenWithDividers.add(widget);
@@ -428,23 +289,15 @@ class ListSection extends StatelessWidget {
       });
 
       childrenWithDividers.add(children!.last);
-      if (type == ListSectionType.base) {
-        childrenWithDividers.add(longDivider);
-      }
 
-      final BorderRadius childrenGroupBorderRadius = switch (type) {
-        ListSectionType.insetGrouped =>
-          _kDefaultInsetGroupedBorderRadius,
-        ListSectionType.base => BorderRadius.zero,
-      };
+      const BorderRadius childrenGroupBorderRadius =
+          _kDefaultInsetGroupedBorderRadius;
 
       decoratedChildrenGroup = DecoratedBox(
         decoration: decoration ??
             BoxDecoration(
-              color: CupertinoDynamicColor.resolve(
-                  decoration?.color ??
-                      CupertinoColors.secondarySystemGroupedBackground,
-                  context),
+              color: decoration?.color ??
+                  themeData.colorScheme.surfaceContainerLow,
               borderRadius: childrenGroupBorderRadius,
             ),
         child: Column(children: childrenWithDividers),
@@ -463,19 +316,15 @@ class ListSection extends StatelessWidget {
     }
 
     return DecoratedBox(
-      decoration: BoxDecoration(
-          color: CupertinoDynamicColor.resolve(backgroundColor, context)),
+      decoration: const BoxDecoration(),
       child: Column(
         children: <Widget>[
-          if (type == ListSectionType.base)
-            SizedBox(height: topMargin),
+          SizedBox(height: topMargin),
           if (headerWidget != null)
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: Padding(
-                padding: type == ListSectionType.base
-                    ? _kDefaultHeaderMargin
-                    : _kInsetGroupedDefaultHeaderMargin,
+                padding: _kInsetGroupedDefaultHeaderMargin,
                 child: headerWidget,
               ),
             ),
@@ -484,9 +333,7 @@ class ListSection extends StatelessWidget {
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: Padding(
-                padding: type == ListSectionType.base
-                    ? _kDefaultFooterMargin
-                    : _kInsetGroupedDefaultFooterMargin,
+                padding: _kInsetGroupedDefaultFooterMargin,
                 child: footerWidget,
               ),
             ),

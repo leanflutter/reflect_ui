@@ -4,34 +4,25 @@
 
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart'
-    show CupertinoColors, CupertinoIcons, CupertinoTheme;
+import 'package:flutter/cupertino.dart' show CupertinoColors, CupertinoTheme;
+import 'package:flutter/material.dart' show Theme, ThemeData;
 import 'package:flutter/widgets.dart';
+import 'package:reflect_ui/src/widgets/extended_theme/extended_theme.dart';
 
 // These constants were eyeballed from iOS 14.4 Settings app for base, Notes for
 // notched without leading, and Reminders app for notched with leading.
 const double _kLeadingSize = 28.0;
-const double _kNotchedLeadingSize = 30.0;
 const double _kMinHeight = _kLeadingSize + 2 * 8.0;
 const double _kMinHeightWithSubtitle = _kLeadingSize + 2 * 10.0;
-const double _kNotchedMinHeight = _kNotchedLeadingSize + 2 * 12.0;
-const double _kNotchedMinHeightWithoutLeading = _kNotchedLeadingSize + 2 * 10.0;
 const EdgeInsetsDirectional _kPadding =
-    EdgeInsetsDirectional.only(start: 20.0, end: 14.0);
+    EdgeInsetsDirectional.only(start: 12.0, end: 12.0);
 const EdgeInsetsDirectional _kPaddingWithSubtitle =
-    EdgeInsetsDirectional.only(start: 20.0, end: 14.0);
-const EdgeInsets _kNotchedPadding = EdgeInsets.symmetric(horizontal: 14.0);
-const EdgeInsetsDirectional _kNotchedPaddingWithoutLeading =
-    EdgeInsetsDirectional.fromSTEB(28.0, 10.0, 14.0, 10.0);
-const double _kLeadingToTitle = 16.0;
-const double _kNotchedLeadingToTitle = 12.0;
+    EdgeInsetsDirectional.only(start: 12.0, end: 12.0);
+const double _kLeadingToTitle = 12.0;
 const double _kNotchedTitleToSubtitle = 3.0;
 const double _kAdditionalInfoToTrailing = 6.0;
 const double _kNotchedTitleWithSubtitleFontSize = 16.0;
 const double _kSubtitleFontSize = 12.0;
-const double _kNotchedSubtitleFontSize = 14.0;
-
-enum _ListTileType { base, notched }
 
 /// An iOS-style list tile.
 ///
@@ -129,72 +120,7 @@ class ListTile extends StatefulWidget {
     this.padding,
     this.leadingSize = _kLeadingSize,
     this.leadingToTitle = _kLeadingToTitle,
-  }) : _type = _ListTileType.base;
-
-  /// Creates a notched iOS-style list tile like the tiles in iOS Notes app or
-  /// Reminders app.
-  ///
-  /// The [title] parameter is required. It is used to convey the most important
-  /// information of list tile. It is typically a [Text].
-  ///
-  /// The [subtitle] parameter is used to display additional information. It is
-  /// placed below the [title].
-  ///
-  /// The [additionalInfo] parameter is used to display additional information.
-  /// It is placed at the end of the tile, before the [trailing] if supplied.
-  ///
-  /// The [leading] parameter is typically an [Icon] or an [Image] and it comes
-  /// at the start of the tile. If omitted in all list tiles, a `hasLeading` of
-  /// enclosing [ListSection] should be set to `false` to ensure
-  /// correct margin of divider between tiles. For Notes-like tile appearance,
-  /// the [leading] can be left `null`.
-  ///
-  /// The [trailing] parameter is typically a [ListTileChevron], an
-  /// [Icon], or a [Button]. It is placed at the very end of the tile.
-  /// For Notes-like tile appearance, the [trailing] can be left `null`.
-  ///
-  /// The [onTap] parameter is used to provide an action that is called when the
-  /// tile is tapped. It is mainly used for navigating to a new route. It should
-  /// not be used to toggle a trailing [CupertinoSwitch] and similar use cases
-  /// because when tile is tapped, it switches the background color and remains
-  /// changed. This is according to iOS behavior.
-  ///
-  /// The [backgroundColor] provides a custom background color for the tile in
-  /// a state before tapped. By default, it matches the theme's background color
-  /// which is by default a [CupertinoColors.systemBackground].
-  ///
-  /// The [backgroundColorActivated] provides a custom background color for the
-  /// tile after it was tapped. By default, it matches the theme's background
-  /// color which is by default a [CupertinoColors.systemGrey4].
-  ///
-  /// The [padding] parameter sets the padding of the content inside the tile.
-  /// It defaults to a value that matches the iOS look, depending on a type of
-  /// [ListTile]. For native look, it should not be provided.
-  ///
-  /// The [leadingSize] constrains the width and height of the leading widget.
-  /// By default, it is set to a value that matches the iOS look, depending on a
-  /// type of [ListTile]. For native look, it should not be provided.
-  ///
-  /// The [leadingToTitle] specifies the horizontal space between [leading] and
-  /// [title] widgets. By default, it is set to a value that matched the iOS
-  /// look, depending on a type of [ListTile]. For native look, it
-  /// should not be provided.
-  const ListTile.notched({
-    super.key,
-    required this.title,
-    this.subtitle,
-    this.additionalInfo,
-    this.leading,
-    this.trailing,
-    this.onTap,
-    this.backgroundColor,
-    this.backgroundColorActivated,
-    this.padding,
-    this.leadingSize = _kNotchedLeadingSize,
-    this.leadingToTitle = _kNotchedLeadingToTitle,
-  }) : _type = _ListTileType.notched;
-
-  final _ListTileType _type;
+  });
 
   /// A [title] is used to convey the central information. Usually a [Text].
   final Widget title;
@@ -252,17 +178,15 @@ class _ListTileState extends State<ListTile> {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle textStyle = CupertinoTheme.of(context).textTheme.textStyle;
+    final ThemeData themeData = Theme.of(context);
+    final TextStyle textStyle = themeData.textTheme.bodyMedium ??
+        CupertinoTheme.of(context).textTheme.textStyle;
     final TextStyle coloredStyle = textStyle.copyWith(
       color: CupertinoColors.secondaryLabel.resolveFrom(context),
     );
 
-    final bool baseType = switch (widget._type) {
-      _ListTileType.base => true,
-      _ListTileType.notched => false,
-    };
     final Widget title = DefaultTextStyle(
-      style: baseType || widget.subtitle == null
+      style: widget.subtitle == null
           ? textStyle
           : textStyle.copyWith(
               fontWeight: FontWeight.w600,
@@ -276,13 +200,7 @@ class _ListTileState extends State<ListTile> {
     );
 
     final EdgeInsetsGeometry padding = widget.padding ??
-        switch (widget._type) {
-          _ListTileType.base when widget.subtitle != null =>
-            _kPaddingWithSubtitle,
-          _ListTileType.notched when widget.leading != null => _kNotchedPadding,
-          _ListTileType.base => _kPadding,
-          _ListTileType.notched => _kNotchedPaddingWithoutLeading,
-        };
+        (widget.subtitle != null ? _kPaddingWithSubtitle : _kPadding);
 
     // The color for default state tile is set to either what user provided or
     // null and it will resolve to the correct color provided by context. But if
@@ -294,18 +212,17 @@ class _ListTileState extends State<ListTile> {
           CupertinoColors.systemGrey4.resolveFrom(context);
     }
 
-    final double minHeight = switch (widget._type) {
-      _ListTileType.base when widget.subtitle != null =>
-        _kMinHeightWithSubtitle,
-      _ListTileType.notched when widget.leading != null => _kNotchedMinHeight,
-      _ListTileType.base => _kMinHeight,
-      _ListTileType.notched => _kNotchedMinHeightWithoutLeading,
-    };
+    final double minHeight =
+        widget.subtitle != null ? _kMinHeightWithSubtitle : _kMinHeight;
 
     final Widget child = Container(
-      constraints:
-          BoxConstraints(minWidth: double.infinity, minHeight: minHeight),
-      color: backgroundColor,
+      constraints: BoxConstraints(
+        minWidth: double.infinity,
+        minHeight: minHeight,
+      ),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+      ),
       child: Padding(
         padding: padding,
         child: Row(
@@ -328,9 +245,7 @@ class _ListTileState extends State<ListTile> {
                     const SizedBox(height: _kNotchedTitleToSubtitle),
                     DefaultTextStyle(
                       style: coloredStyle.copyWith(
-                        fontSize: baseType
-                            ? _kSubtitleFontSize
-                            : _kNotchedSubtitleFontSize,
+                        fontSize: _kSubtitleFontSize,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -350,7 +265,7 @@ class _ListTileState extends State<ListTile> {
               if (widget.trailing != null)
                 const SizedBox(width: _kAdditionalInfoToTrailing),
             ],
-            if (widget.trailing != null) widget.trailing!
+            if (widget.trailing != null) widget.trailing!,
           ],
         ),
       ),
@@ -393,10 +308,13 @@ class ListTileChevron extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData themeData = Theme.of(context);
+    final extendedThemeData = ExtendedTheme.of(context);
+
     return Icon(
-      CupertinoIcons.right_chevron,
-      size: CupertinoTheme.of(context).textTheme.textStyle.fontSize,
-      color: CupertinoColors.systemGrey2.resolveFrom(context),
+      extendedThemeData.icons.chevronRight,
+      size: 18.0,
+      color: themeData.iconTheme.color,
     );
   }
 }

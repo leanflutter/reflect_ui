@@ -8,6 +8,7 @@ import 'package:theme_tailor_annotation/theme_tailor_annotation.dart';
 
 export 'theme_base_colors.dart';
 export 'theme_base_corners.dart';
+export 'theme_base_icons.dart';
 export 'theme_base_shadows.dart';
 export 'theme_base_spacing.dart';
 
@@ -21,6 +22,7 @@ class ExtendedThemeData extends ThemeExtension<ExtendedThemeData>
     required this.corners,
     required this.shadows,
     required this.spacing,
+    required this.icons,
     required this.baseStyleResolver,
   });
 
@@ -28,6 +30,7 @@ class ExtendedThemeData extends ThemeExtension<ExtendedThemeData>
   final ThemeBaseCorners corners;
   final ThemeBaseShadows shadows;
   final ThemeBaseSpacing spacing;
+  final ThemeBaseIcons icons;
   final WidgetBaseStyleResolver baseStyleResolver;
 
   Color get primaryColor {
