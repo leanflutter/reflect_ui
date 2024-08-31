@@ -10,12 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:reflect_ui/src/foundation/constants.dart';
 import 'package:reflect_ui/src/widgets/extended_theme/extended_theme.dart';
 
-// Examples can assume:
-// late BuildContext context;
-// enum SingingCharacter { lafayette }
-// late SingingCharacter? _character;
-// late StateSetter setState;
-
 const Size _size = Size(
   kMinInteractiveDimensionReflect,
   kMinInteractiveDimensionReflect,
@@ -364,18 +358,26 @@ class _RadioPainter extends ToggleablePainter {
 
     if (checkmarkStyle) {
       if (value ?? false) {
+        // Draw the circle
+        paint.color = activeColor;
+        paint.style = PaintingStyle.stroke;
+        canvas.drawCircle(center, _kOuterRadius, paint);
+        paint.style = PaintingStyle.fill;
+        canvas.drawCircle(center, _kOuterRadius, paint);
+
+        // Draw the check mark.
         final Path path = Path();
         final Paint checkPaint = Paint()
-          ..color = activeColor
+          ..color = Colors.white
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 2
+          ..strokeWidth = 1.8
           ..strokeCap = StrokeCap.round;
-        final double width = _size.width;
+        final double width = _size.width * 0.56;
         final Offset origin =
             Offset(center.dx - (width / 2), center.dy - (width / 2));
-        final Offset start = Offset(width * 0.25, width * 0.52);
-        final Offset mid = Offset(width * 0.46, width * 0.75);
-        final Offset end = Offset(width * 0.85, width * 0.29);
+        final Offset start = Offset(width * 0.28, width * 0.5);
+        final Offset mid = Offset(width * 0.43, width * 0.65);
+        final Offset end = Offset(width * 0.72, width * 0.35);
         path.moveTo(origin.dx + start.dx, origin.dy + start.dy);
         path.lineTo(origin.dx + mid.dx, origin.dy + mid.dy);
         canvas.drawPath(path, checkPaint);

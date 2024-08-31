@@ -31,6 +31,22 @@ class RadioMeta extends Meta with _$RadioMeta {
                 radioValue = newValue!;
               }),
             ),
+            Radio<String>(
+              value: '1',
+              groupValue: radioValue,
+              onChanged: (newValue) => setState(() {
+                radioValue = newValue!;
+              }),
+              useCheckmarkStyle: true,
+            ),
+            Radio<String>(
+              value: '2',
+              groupValue: radioValue,
+              onChanged: (newValue) => setState(() {
+                radioValue = newValue!;
+              }),
+              useCheckmarkStyle: true,
+            ),
           ],
         );
       },
