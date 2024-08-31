@@ -4,10 +4,14 @@
 
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart' show CupertinoColors, CupertinoTheme;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' show Theme, ThemeData;
 import 'package:flutter/widgets.dart';
+import 'package:reflect_ui/src/extensions/color.dart';
 import 'package:reflect_ui/src/widgets/extended_theme/extended_theme.dart';
+
+export 'radio_list_tile.dart';
+export 'switch_list_tile.dart';
 
 // These constants were eyeballed from iOS 14.4 Settings app for base, Notes for
 // notched without leading, and Reminders app for notched with leading.
@@ -178,11 +182,12 @@ class _ListTileState extends State<ListTile> {
 
   @override
   Widget build(BuildContext context) {
+    final ExtendedThemeData extendedTheme = ExtendedTheme.of(context);
     final ThemeData themeData = Theme.of(context);
-    final TextStyle textStyle = themeData.textTheme.bodyMedium ??
-        CupertinoTheme.of(context).textTheme.textStyle;
+    final TextStyle textStyle =
+        themeData.textTheme.bodyMedium ?? const TextStyle();
     final TextStyle coloredStyle = textStyle.copyWith(
-      color: CupertinoColors.secondaryLabel.resolveFrom(context),
+      color: themeData.colorScheme.onSurfaceVariant,
     );
 
     final Widget title = DefaultTextStyle(
@@ -209,7 +214,8 @@ class _ListTileState extends State<ListTile> {
     Color? backgroundColor = widget.backgroundColor;
     if (_tapped) {
       backgroundColor = widget.backgroundColorActivated ??
-          CupertinoColors.systemGrey4.resolveFrom(context);
+          extendedTheme.colors.gray
+              .withShade(themeData.brightness == Brightness.dark ? 800 : 200);
     }
 
     final double minHeight =
@@ -308,13 +314,12 @@ class ListTileChevron extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData themeData = Theme.of(context);
     final extendedThemeData = ExtendedTheme.of(context);
 
     return Icon(
       extendedThemeData.icons.chevronRight,
       size: 18.0,
-      color: themeData.iconTheme.color,
+      color: extendedThemeData.colors.gray.withShade(400),
     );
   }
 }

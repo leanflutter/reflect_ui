@@ -2,31 +2,30 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/cupertino.dart' show CupertinoColors;
 import 'package:flutter/material.dart' show TextTheme, Theme, ThemeData;
 import 'package:flutter/widgets.dart';
 
 // Margin on top of the list section. This was eyeballed from iOS 14.4 Simulator
 // and should be always present on top of the edge-to-edge variant.
-const double _kMarginTop = 12.0;
+const double _kMarginTop = 8.0;
 
 // Header margin for inset grouped variant, determined from iOS 14.4 Simulator.
-const EdgeInsetsDirectional _kInsetGroupedDefaultHeaderMargin =
-    EdgeInsetsDirectional.fromSTEB(20.0, 16.0, 20.0, 6.0);
+const EdgeInsetsDirectional _kDefaultHeaderMargin =
+    EdgeInsetsDirectional.fromSTEB(24.0, 6.0, 24.0, 6.0);
 
 // Footer margin for inset grouped variant, determined from iOS 14.4 Simulator.
-const EdgeInsetsDirectional _kInsetGroupedDefaultFooterMargin =
-    EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 10.0);
+const EdgeInsetsDirectional _kDefaultFooterMargin =
+    EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 6.0);
 
 // Used for iOS "Inset Grouped" margin, determined from SwiftUI's Forms in
 // iOS 14.2 SDK.
 const EdgeInsetsDirectional _kDefaultRowsMargin =
-    EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 10.0);
+    EdgeInsetsDirectional.fromSTEB(12.0, 6.0, 12.0, 6.0);
 
 // Used for iOS "Inset Grouped" margin, determined from SwiftUI's Forms in
 // iOS 14.2 SDK.
 const EdgeInsetsDirectional _kDefaultRowsMarginWithHeader =
-    EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 10.0);
+    EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 6.0);
 
 // Used for iOS "Inset Grouped" border radius, estimated from SwiftUI's Forms in
 // iOS 14.2 SDK.
@@ -73,21 +72,11 @@ const double _kDefaultAdditionalDividerMarginWithoutLeading = 0.0;
 /// The [margin] is used to provide spacing around the content area of the
 /// section encapsulating [children].
 ///
-/// The [decoration] of [children] specifies how they should be decorated. If it
-/// is not provided in constructor, the background color of [children] defaults
-/// to [CupertinoColors.secondarySystemGroupedBackground] and border radius of
-/// children group defaults to 10.0 circular radius when constructing with
-/// [ListSection.insetGrouped]. Defaults to zero radius for the
-/// standard [ListSection] constructor.
-///
 /// The [dividerMargin] and [additionalDividerMargin] specify the starting
 /// margin of the divider between list tiles. The [dividerMargin] is always
 /// present, but [additionalDividerMargin] is only added to the [dividerMargin]
 /// if `hasLeading` is set to true in the constructor, which is the default
 /// value.
-///
-/// The [backgroundColor] of the section defaults to
-/// [CupertinoColors.systemGroupedBackground].
 ///
 /// {@macro flutter.material.Material.clipBehavior}
 ///
@@ -135,15 +124,6 @@ class ListSection extends StatelessWidget {
   /// The [margin] parameter sets the spacing around the content area of the
   /// section encapsulating [children], and defaults to zero padding.
   ///
-  /// The [decoration] parameter sets the decoration around [children].
-  /// If null, defaults to [CupertinoColors.secondarySystemGroupedBackground].
-  /// If null, defaults to 10.0 circular radius when constructing with
-  /// [ListSection.insetGrouped]. Defaults to zero radius for the
-  /// standard [ListSection] constructor.
-  ///
-  /// The [backgroundColor] parameter sets the background color behind the
-  /// section. If null, defaults to [CupertinoColors.systemGroupedBackground].
-  ///
   /// The [dividerMargin] parameter sets the starting offset of the divider
   /// between rows.
   ///
@@ -166,7 +146,7 @@ class ListSection extends StatelessWidget {
     this.header,
     this.footer,
     EdgeInsetsGeometry? margin,
-    this.backgroundColor = CupertinoColors.systemGroupedBackground,
+    this.backgroundColor,
     this.decoration,
     this.clipBehavior = Clip.hardEdge,
     this.dividerMargin = _kDefaultDividerMargin,
@@ -209,18 +189,13 @@ class ListSection extends StatelessWidget {
 
   /// Sets the decoration around [children].
   ///
-  /// If null, background color defaults to
-  /// [CupertinoColors.secondarySystemGroupedBackground].
-  ///
   /// If null, border radius defaults to 10.0 circular radius when constructing
   /// with [ListSection.insetGrouped]. Defaults to zero radius for the
   /// standard [ListSection] constructor.
   final BoxDecoration? decoration;
 
   /// Sets the background color behind the section.
-  ///
-  /// Defaults to [CupertinoColors.systemGroupedBackground].
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// {@macro flutter.material.Material.clipBehavior}
   ///
@@ -266,13 +241,17 @@ class ListSection extends StatelessWidget {
 
     if (header != null) {
       headerWidget = DefaultTextStyle(
-        style: textTheme.bodySmall!.copyWith(fontWeight: FontWeight.bold),
+        style: textTheme.bodySmall!.copyWith(
+          color: themeData.colorScheme.onSurfaceVariant,
+        ),
         child: header!,
       );
     }
     if (footer != null) {
       footerWidget = DefaultTextStyle(
-        style: textTheme.bodySmall!.copyWith(fontWeight: FontWeight.normal),
+        style: textTheme.bodySmall!.copyWith(
+          color: themeData.colorScheme.onSurfaceVariant,
+        ),
         child: footer!,
       );
     }
@@ -324,7 +303,7 @@ class ListSection extends StatelessWidget {
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: Padding(
-                padding: _kInsetGroupedDefaultHeaderMargin,
+                padding: _kDefaultHeaderMargin,
                 child: headerWidget,
               ),
             ),
@@ -333,7 +312,7 @@ class ListSection extends StatelessWidget {
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: Padding(
-                padding: _kInsetGroupedDefaultFooterMargin,
+                padding: _kDefaultFooterMargin,
                 child: footerWidget,
               ),
             ),
