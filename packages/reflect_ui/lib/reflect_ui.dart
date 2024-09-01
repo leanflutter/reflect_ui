@@ -34,6 +34,7 @@ export 'src/widgets/gapped_column/gapped_column.dart';
 export 'src/widgets/gapped_row/gapped_row.dart';
 export 'src/widgets/hoverable_area/hoverable_area.dart';
 export 'src/widgets/icon_button/icon_button.dart';
+export 'src/widgets/kbd/kbd.dart';
 export 'src/widgets/list_section/list_section.dart';
 export 'src/widgets/list_tile/list_tile.dart';
 export 'src/widgets/loader/loader.dart';
