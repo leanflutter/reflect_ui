@@ -80,7 +80,7 @@ class _HomePageState extends State<_HomePage> {
                       ),
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16,
-                        vertical: 8,
+                        vertical: 0,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +94,7 @@ class _HomePageState extends State<_HomePage> {
                 );
               },
               separatorBuilder: (context, index) {
-                return const Divider();
+                return const Divider(height: 1);
               },
             ),
           ),

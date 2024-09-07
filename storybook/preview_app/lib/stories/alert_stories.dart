@@ -85,7 +85,7 @@ class AlertWithVariantStory extends StoryObj<AlertMeta>
             children: [
               for (final kind in AlertKind.values)
                 SizedBox(
-                  width: 300,
+                  width: 260,
                   child: Alert(
                     kind: kind,
                     variant: variant,
