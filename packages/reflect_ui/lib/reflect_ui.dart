@@ -39,6 +39,7 @@ export 'src/widgets/list_section/list_section.dart';
 export 'src/widgets/list_tile/list_tile.dart';
 export 'src/widgets/loader/loader.dart';
 export 'src/widgets/menu/menu.dart';
+export 'src/widgets/nav_list/nav_list.dart';
 export 'src/widgets/radio/radio.dart';
 export 'src/widgets/segmented_control/segmented_control.dart';
 export 'src/widgets/slider/slider.dart';
