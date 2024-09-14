@@ -7,6 +7,7 @@ import 'package:preview_app/stories/divider_stories.dart';
 import 'package:preview_app/stories/kbd_stories.dart';
 import 'package:preview_app/stories/loader_stories.dart';
 import 'package:preview_app/stories/menu_stories.dart';
+import 'package:preview_app/stories/nav_list_stories.dart';
 import 'package:preview_app/stories/radio_stories.dart';
 import 'package:preview_app/stories/slider_stories.dart';
 import 'package:preview_app/stories/switch_stories.dart';
@@ -28,6 +29,7 @@ final StorybookConfig storybookConfig = StorybookConfig(
     KbdDefaultStory(),
     LoaderDefaultStory(),
     MenuDefaultStory(),
+    NavListDefaultStory(),
     RadioDefaultStory(),
     SliderDefaultStory(),
     SwitchDefaultStory(),

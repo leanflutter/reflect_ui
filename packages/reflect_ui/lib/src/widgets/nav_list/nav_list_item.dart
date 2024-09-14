@@ -4,7 +4,6 @@
 
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' show Theme, ThemeData;
 import 'package:flutter/widgets.dart';
 import 'package:reflect_ui/src/extensions/color.dart';
@@ -12,11 +11,11 @@ import 'package:reflect_ui/src/widgets/extended_theme/extended_theme.dart';
 
 // These constants were eyeballed from iOS 14.4 Settings app for base, Notes for
 // notched without leading, and Reminders app for notched with leading.
-const double _kLeadingSize = 28.0;
-const double _kMinHeight = _kLeadingSize + 2 * 2.0;
+const double _kLeadingSize = 18.0;
+const double _kMinHeight = 28;
 const EdgeInsetsDirectional _kPadding =
     EdgeInsetsDirectional.only(start: 12.0, end: 12.0);
-const double _kLeadingToTitle = 12.0;
+const double _kLeadingToTitle = 6.0;
 const double _kAdditionalInfoToTrailing = 6.0;
 
 /// An iOS-style list tile.
@@ -174,7 +173,8 @@ class _NavListItemState extends State<NavListItem> {
     final TextStyle textStyle =
         (themeData.textTheme.bodyMedium ?? const TextStyle()).copyWith(
       fontSize: 13.0,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
+      color: extendedTheme.colors.gray.withShade(700),
     );
     final TextStyle coloredStyle = textStyle.copyWith(
       color: themeData.colorScheme.onSurfaceVariant,
@@ -195,7 +195,8 @@ class _NavListItemState extends State<NavListItem> {
     // default color that matched the iOS-style.
     Color? backgroundColor = widget.backgroundColor;
     if (widget.selected) {
-      backgroundColor = extendedTheme.colors.primary.withShade(100);
+      backgroundColor = widget.backgroundColorActivated ??
+          extendedTheme.colors.gray.withShade(100);
     }
 
     final Widget child = Container(
@@ -205,6 +206,7 @@ class _NavListItemState extends State<NavListItem> {
       ),
       decoration: BoxDecoration(
         color: backgroundColor,
+        borderRadius: BorderRadius.circular(6.0),
       ),
       child: Padding(
         padding: padding,
@@ -213,7 +215,15 @@ class _NavListItemState extends State<NavListItem> {
             if (widget.leading case final Widget leading) ...<Widget>[
               SizedBox.square(
                 dimension: widget.leadingSize,
-                child: Center(child: leading),
+                child: Center(
+                  child: IconTheme(
+                    data: IconThemeData(
+                      size: widget.leadingSize,
+                      color: extendedTheme.colors.gray.withShade(700),
+                    ),
+                    child: leading,
+                  ),
+                ),
               ),
               SizedBox(width: widget.leadingToTitle),
             ] else
@@ -253,28 +263,6 @@ class _NavListItemState extends State<NavListItem> {
       },
       behavior: HitTestBehavior.opaque,
       child: child,
-    );
-  }
-}
-
-/// A typical iOS trailing widget used to denote that a `NavListItem` is a
-/// button with an action.
-///
-/// The [NavListItemChevron] is meant as a convenience implementation of
-/// trailing right chevron.
-class NavListItemChevron extends StatelessWidget {
-  /// Creates a typical widget used to denote that a `NavListItem` is a
-  /// button with action.
-  const NavListItemChevron({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final extendedThemeData = ExtendedTheme.of(context);
-
-    return Icon(
-      extendedThemeData.icons.chevronRight,
-      size: 18.0,
-      color: extendedThemeData.colors.gray.withShade(400),
     );
   }
 }

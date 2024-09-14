@@ -1,6 +1,6 @@
 output: dist/
 variables:
-  FLUTTER_ROOT: ~/fvm/versions/3.22.2
+  FLUTTER_ROOT: ~/fvm/versions/3.24.3
 releases:
   - name: prod
     jobs:

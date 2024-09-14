@@ -4,6 +4,8 @@
 
 import 'package:flutter/material.dart' show TextTheme, Theme, ThemeData;
 import 'package:flutter/widgets.dart';
+import 'package:reflect_ui/reflect_ui.dart';
+import 'package:reflect_ui/src/extensions/color.dart';
 
 // Margin on top of the list section. This was eyeballed from iOS 14.4 Simulator
 // and should be always present on top of the edge-to-edge variant.
@@ -166,6 +168,7 @@ class NavListSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ExtendedThemeData extendedThemeData = ExtendedTheme.of(context);
     ThemeData themeData = Theme.of(context);
     TextTheme textTheme = themeData.textTheme;
 
@@ -174,7 +177,8 @@ class NavListSection extends StatelessWidget {
     if (header != null) {
       headerWidget = DefaultTextStyle(
         style: textTheme.bodySmall!.copyWith(
-          color: themeData.colorScheme.onSurfaceVariant,
+          color: extendedThemeData.colors.gray.withShade(500),
+          fontWeight: FontWeight.w600,
         ),
         child: header!,
       );

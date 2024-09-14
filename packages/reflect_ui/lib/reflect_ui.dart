@@ -13,6 +13,7 @@ export 'package:flutter/material.dart'
         Tooltip;
 export 'package:flutter/widgets.dart';
 
+export 'src/extensions/color.dart';
 export 'src/foundation/constants.dart';
 export 'src/painting/widget_base_style.dart';
 export 'src/painting/widget_base_style_resolver.dart';
