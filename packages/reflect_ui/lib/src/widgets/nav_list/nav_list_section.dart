@@ -4,8 +4,9 @@
 
 import 'package:flutter/material.dart' show TextTheme, Theme, ThemeData;
 import 'package:flutter/widgets.dart';
-import 'package:reflect_ui/reflect_ui.dart';
 import 'package:reflect_ui/src/extensions/color.dart';
+import 'package:reflect_ui/src/widgets/extended_theme/extended_theme.dart';
+import 'package:reflect_ui/src/widgets/gapped_column/gapped_column.dart';
 
 // Margin on top of the list section. This was eyeballed from iOS 14.4 Simulator
 // and should be always present on top of the edge-to-edge variant.
@@ -196,7 +197,7 @@ class NavListSection extends StatelessWidget {
     if (children != null && children!.isNotEmpty) {
       decoratedChildrenGroup = DecoratedBox(
         decoration: const BoxDecoration(),
-        child: Column(children: children!),
+        child: GappedColumn(gap: 2, children: children!),
       );
 
       decoratedChildrenGroup = Padding(

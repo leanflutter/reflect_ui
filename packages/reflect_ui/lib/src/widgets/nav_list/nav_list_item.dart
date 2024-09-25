@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' show Theme, ThemeData;
 import 'package:flutter/widgets.dart';
 import 'package:reflect_ui/src/extensions/color.dart';
@@ -172,9 +173,10 @@ class _NavListItemState extends State<NavListItem> {
     final ThemeData themeData = Theme.of(context);
     final TextStyle textStyle =
         (themeData.textTheme.bodyMedium ?? const TextStyle()).copyWith(
-      fontSize: 13.0,
       fontWeight: FontWeight.w500,
-      color: extendedTheme.colors.gray.withShade(700),
+      color: themeData.brightness == Brightness.light
+          ? extendedTheme.colors.gray.withShade(700)
+          : extendedTheme.colors.gray.withShade(300),
     );
     final TextStyle coloredStyle = textStyle.copyWith(
       color: themeData.colorScheme.onSurfaceVariant,
@@ -196,7 +198,9 @@ class _NavListItemState extends State<NavListItem> {
     Color? backgroundColor = widget.backgroundColor;
     if (widget.selected) {
       backgroundColor = widget.backgroundColorActivated ??
-          extendedTheme.colors.gray.withShade(100);
+          (themeData.brightness == Brightness.light
+              ? extendedTheme.colors.gray.withShade(100)
+              : extendedTheme.colors.gray.withShade(700));
     }
 
     final Widget child = Container(
@@ -219,7 +223,9 @@ class _NavListItemState extends State<NavListItem> {
                   child: IconTheme(
                     data: IconThemeData(
                       size: widget.leadingSize,
-                      color: extendedTheme.colors.gray.withShade(700),
+                      color: (themeData.brightness == Brightness.light
+                          ? extendedTheme.colors.gray.withShade(700)
+                          : extendedTheme.colors.gray.withShade(300)),
                     ),
                     child: leading,
                   ),
