@@ -26,6 +26,7 @@ export 'src/widgets/button/button.dart';
 export 'src/widgets/card/card.dart';
 export 'src/widgets/checkbox/checkbox.dart';
 export 'src/widgets/close_button/close_button.dart';
+export 'src/widgets/context_menu_region/context_menu_region.dart';
 export 'src/widgets/divided_column/divided_column.dart';
 export 'src/widgets/divided_row/divided_row.dart';
 export 'src/widgets/divider/divider.dart';
