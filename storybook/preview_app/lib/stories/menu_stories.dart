@@ -15,6 +15,8 @@ part 'menu_stories.g.dart';
 class MenuMeta extends Meta with _$MenuMeta {
   final FocusNode _buttonFocusNode = FocusNode(debugLabel: 'Menu Button');
 
+  bool _checked = false;
+
   @override
   Widget buildWidget(BuildContext context, List<Arg> args) {
     return StatefulBuilder(
@@ -28,27 +30,61 @@ class MenuMeta extends Meta with _$MenuMeta {
               Menu(
                 targetFocusNode: _buttonFocusNode,
                 children: <Widget>[
+                  const SizedBox(width: 200, height: 0),
                   MenuItemButton(
-                    child: const Text('Reset'),
-                    onPressed: () => print('Reset'),
+                    child: const Text('45%'),
+                    onPressed: () => print('45%'),
                   ),
-                  const Text('AAA'),
+                  const MenuItemDivider(),
+                  MenuItemButton(
+                    child: const Text('Zoom in'),
+                    onPressed: () => print('Zoom in'),
+                  ),
+                  MenuItemButton(
+                    child: const Text('Zoom out'),
+                    onPressed: () => print('Zoom out'),
+                  ),
+                  MenuItemButton(
+                    child: const Text('Zoom to fit'),
+                    onPressed: () => print('Zoom to fit'),
+                  ),
+                  MenuItemButton(
+                    child: const Text('Zoom to 50%'),
+                    onPressed: () => print('Zoom to 50%'),
+                  ),
+                  MenuItemButton(
+                    child: const Text('Zoom to 100%'),
+                    onPressed: () => print('Zoom to 100%'),
+                  ),
+                  MenuItemButton(
+                    child: const Text('Zoom to 200%'),
+                    onPressed: () => print('Zoom to 200%'),
+                  ),
+                  const MenuItemDivider(),
                   SubmenuButton(
                     children: <Widget>[
                       MenuItemButton(
-                        onPressed: () => print('Cut'),
-                        child: const Text('Cut'),
+                        onPressed: () => print('Submenu item 1'),
+                        child: const Text('Submenu item 1'),
                       ),
                       MenuItemButton(
-                        onPressed: () => print('Copy'),
-                        child: const Text('Copy'),
+                        onPressed: () => print('Submenu item 2'),
+                        child: const Text('Submenu item 2'),
                       ),
                       MenuItemButton(
-                        onPressed: () => print('Paste'),
-                        child: const Text('Paste'),
+                        onPressed: () => print('Submenu item 3'),
+                        child: const Text('Submenu item 3'),
                       ),
                     ],
-                    child: const Text('Background Color'),
+                    child: const Text('Pixel preview'),
+                  ),
+                  CheckboxMenuButton(
+                    value: _checked,
+                    onChanged: (value) {
+                      _checked = value!;
+                      setState(() {});
+                    },
+                    child: const Text('Pixel grid'),
                   ),
                 ],
                 targetBuilder: (

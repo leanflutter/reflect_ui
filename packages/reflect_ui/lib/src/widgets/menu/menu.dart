@@ -28,10 +28,13 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:reflect_ui/src/widgets/button/button.dart' hide ButtonStyle;
 import 'package:reflect_ui/src/widgets/checkbox/checkbox.dart';
+import 'package:reflect_ui/src/widgets/hoverable_area/hoverable_area.dart';
 import 'package:reflect_ui/src/widgets/menu/menu_style.dart';
 import 'package:reflect_ui/src/widgets/radio/radio.dart';
 
+export 'menu_item_divider.dart';
 export 'menu_style.dart';
 
 // Examples can assume:
@@ -144,11 +147,6 @@ class Menu extends StatefulWidget {
     this.style,
     this.alignmentOffset = Offset.zero,
     this.clipBehavior = Clip.hardEdge,
-    @Deprecated(
-      'Use consumeOutsideTap instead. '
-      'This feature was deprecated after v3.16.0-8.0.pre.',
-    )
-    this.anchorTapClosesMenu = false,
     this.consumeOutsideTap = false,
     this.onOpen,
     this.onClose,
@@ -206,32 +204,6 @@ class Menu extends StatefulWidget {
   ///
   /// Defaults to [Clip.hardEdge].
   final Clip clipBehavior;
-
-  /// Whether the menus will be closed if the anchor area is tapped.
-  ///
-  /// For menus opened by buttons that toggle the menu, if the button is tapped
-  /// when the menu is open, the button should close the menu. But if
-  /// [anchorTapClosesMenu] is true, then the menu will close, and
-  /// (surprisingly) immediately re-open. This is because tapping on the button
-  /// closes the menu before the `onPressed` or `onTap` handler is called
-  /// because of it being considered to be "outside" the menu system, and then
-  /// the button (seeing that the menu is closed) immediately reopens the menu.
-  /// The result is that the user thinks that tapping on the button does
-  /// nothing. So, for button-initiated menus, this value is typically false so
-  /// that the menu anchor area is considered "inside" of the menu system and
-  /// doesn't cause it to close unless [MenuController.close] is called.
-  ///
-  /// For menus that are positioned using [MenuController.open]'s `position`
-  /// parameter, it is often desirable that clicking on the anchor always closes
-  /// the menu since the anchor area isn't usually considered part of the menu
-  /// system by the user. In this case [anchorTapClosesMenu] should be true.
-  ///
-  /// Defaults to false.
-  @Deprecated(
-    'Use consumeOutsideTap instead. '
-    'This feature was deprecated after v3.16.0-8.0.pre.',
-  )
-  final bool anchorTapClosesMenu;
 
   /// Whether or not a tap event that closes the menu will be permitted to
   /// continue on to the gesture arena.
@@ -294,13 +266,6 @@ class Menu extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(
-      FlagProperty(
-        'anchorTapClosesMenu',
-        value: anchorTapClosesMenu,
-        ifTrue: 'AUTO-CLOSE',
-      ),
-    );
     properties
         .add(DiagnosticsProperty<FocusNode?>('focusNode', targetFocusNode));
     properties.add(DiagnosticsProperty<MenuStyle?>('style', style));
@@ -411,24 +376,12 @@ class _MenuState extends State<Menu> {
           alignmentOffset: widget.alignmentOffset ?? Offset.zero,
           menuPosition: _menuPosition,
           clipBehavior: widget.clipBehavior,
-          children: widget.children,
           crossAxisUnconstrained: widget.crossAxisUnconstrained,
+          children: widget.children,
         );
       },
       child: _buildContents(context),
     );
-
-    if (!widget.anchorTapClosesMenu) {
-      child = TapRegion(
-        groupId: _root,
-        consumeOutsideTaps: _root._isOpen && widget.consumeOutsideTap,
-        onTapOutside: (PointerDownEvent event) {
-          assert(_debugMenuInfo('Tapped Outside ${widget.controller}'));
-          _closeChildren();
-        },
-        child: child,
-      );
-    }
 
     return _MenuScope(
       anchorKey: _anchorKey,
@@ -1047,91 +1000,6 @@ class MenuItemButton extends StatefulWidget {
     return MenuButtonTheme.of(context).style;
   }
 
-  /// A static convenience method that constructs a [MenuItemButton]'s
-  /// [ButtonStyle] given simple values.
-  ///
-  /// The [foregroundColor] color is used to create a [WidgetStateProperty]
-  /// [ButtonStyle.foregroundColor] value. Specify a value for [foregroundColor]
-  /// to specify the color of the button's icons. Use [backgroundColor] for the
-  /// button's background fill color. Use [disabledForegroundColor] and
-  /// [disabledBackgroundColor] to specify the button's disabled icon and fill
-  /// color.
-  ///
-  /// All of the other parameters are either used directly or used to create a
-  /// [WidgetStateProperty] with a single value for all states.
-  ///
-  /// All parameters default to null, by default this method returns a
-  /// [ButtonStyle] that doesn't override anything.
-  ///
-  /// For example, to override the default foreground color for a
-  /// [MenuItemButton], as well as its overlay color, with all of the standard
-  /// opacity adjustments for the pressed, focused, and hovered states, one
-  /// could write:
-  ///
-  /// ```dart
-  /// MenuItemButton(
-  ///   leadingIcon: const Icon(Icons.pets),
-  ///   style: MenuItemButton.styleFrom(foregroundColor: Colors.green),
-  ///   onPressed: () {
-  ///     // ...
-  ///   },
-  ///   child: const Text('Button Label'),
-  /// ),
-  /// ```
-  static ButtonStyle styleFrom({
-    Color? foregroundColor,
-    Color? backgroundColor,
-    Color? disabledForegroundColor,
-    Color? disabledBackgroundColor,
-    Color? shadowColor,
-    Color? surfaceTintColor,
-    Color? iconColor,
-    TextStyle? textStyle,
-    Color? overlayColor,
-    double? elevation,
-    EdgeInsetsGeometry? padding,
-    Size? minimumSize,
-    Size? fixedSize,
-    Size? maximumSize,
-    MouseCursor? enabledMouseCursor,
-    MouseCursor? disabledMouseCursor,
-    BorderSide? side,
-    OutlinedBorder? shape,
-    VisualDensity? visualDensity,
-    MaterialTapTargetSize? tapTargetSize,
-    Duration? animationDuration,
-    bool? enableFeedback,
-    AlignmentGeometry? alignment,
-    InteractiveInkFeatureFactory? splashFactory,
-  }) {
-    return TextButton.styleFrom(
-      foregroundColor: foregroundColor,
-      backgroundColor: backgroundColor,
-      disabledBackgroundColor: disabledBackgroundColor,
-      disabledForegroundColor: disabledForegroundColor,
-      shadowColor: shadowColor,
-      surfaceTintColor: surfaceTintColor,
-      iconColor: iconColor,
-      textStyle: textStyle,
-      overlayColor: overlayColor,
-      elevation: elevation,
-      padding: padding,
-      minimumSize: minimumSize,
-      fixedSize: fixedSize,
-      maximumSize: maximumSize,
-      enabledMouseCursor: enabledMouseCursor,
-      disabledMouseCursor: disabledMouseCursor,
-      side: side,
-      shape: shape,
-      visualDensity: visualDensity,
-      tapTargetSize: tapTargetSize,
-      animationDuration: animationDuration,
-      enableFeedback: enableFeedback,
-      alignment: alignment,
-      splashFactory: splashFactory,
-    );
-  }
-
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
@@ -1220,25 +1088,33 @@ class _MenuItemButtonState extends State<MenuItemButton> {
       mergedStyle = widget.style!.merge(mergedStyle);
     }
 
-    Widget child = TextButton(
-      onPressed: widget.enabled ? _handleSelect : null,
-      onHover: widget.enabled ? _handleHover : null,
-      onFocusChange: widget.enabled ? widget.onFocusChange : null,
-      focusNode: _focusNode,
-      style: mergedStyle,
-      autofocus: widget.enabled && widget.autofocus,
-      statesController: widget.statesController,
-      clipBehavior: widget.clipBehavior,
-      isSemanticButton: null,
-      child: _MenuItemLabel(
-        leadingIcon: widget.leadingIcon,
-        shortcut: widget.shortcut,
-        semanticsLabel: widget.semanticsLabel,
-        trailingIcon: widget.trailingIcon,
-        hasSubmenu: false,
-        overflowAxis: _anchor?._orientation ?? widget.overflowAxis,
-        child: widget.child,
-      ),
+    Widget child = HoverableArea(
+      builder: (context, hovered) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+          child: Button(
+            variant: hovered ? ButtonVariant.filled : ButtonVariant.transparent,
+            onPressed: widget.enabled ? _handleSelect : null,
+            // onHover: widget.enabled ? _handleHover : null,
+            onFocusChange: widget.enabled ? widget.onFocusChange : null,
+            focusNode: _focusNode,
+            // style: mergedStyle,
+            autofocus: widget.enabled && widget.autofocus,
+            // statesController: widget.statesController,
+            // clipBehavior: widget.clipBehavior,
+            // isSemanticButton: null,
+            child: _MenuItemLabel(
+              leadingIcon: widget.leadingIcon,
+              shortcut: widget.shortcut,
+              semanticsLabel: widget.semanticsLabel,
+              trailingIcon: widget.trailingIcon,
+              hasSubmenu: false,
+              overflowAxis: _anchor?._orientation ?? widget.overflowAxis,
+              child: widget.child,
+            ),
+          ),
+        );
+      },
     );
 
     if (_platformSupportsAccelerators && widget.enabled) {
@@ -1842,89 +1718,6 @@ class SubmenuButton extends StatefulWidget {
     return MenuButtonTheme.of(context).style;
   }
 
-  /// A static convenience method that constructs a [SubmenuButton]'s
-  /// [ButtonStyle] given simple values.
-  ///
-  /// The [foregroundColor] color is used to create a [WidgetStateProperty]
-  /// [ButtonStyle.foregroundColor] value. Specify a value for [foregroundColor]
-  /// to specify the color of the button's icons. Use [backgroundColor] for the
-  /// button's background fill color. Use [disabledForegroundColor] and
-  /// [disabledBackgroundColor] to specify the button's disabled icon and fill
-  /// color.
-  ///
-  /// All of the other parameters are either used directly or used to create a
-  /// [WidgetStateProperty] with a single value for all states.
-  ///
-  /// All parameters default to null, by default this method returns a
-  /// [ButtonStyle] that doesn't override anything.
-  ///
-  /// For example, to override the default foreground color for a
-  /// [SubmenuButton], as well as its overlay color, with all of the standard
-  /// opacity adjustments for the pressed, focused, and hovered states, one
-  /// could write:
-  ///
-  /// ```dart
-  /// SubmenuButton(
-  ///   leadingIcon: const Icon(Icons.pets),
-  ///   style: SubmenuButton.styleFrom(foregroundColor: Colors.green),
-  ///   children: const <Widget>[ /* ... */ ],
-  ///   child: const Text('Button Label'),
-  /// ),
-  /// ```
-  static ButtonStyle styleFrom({
-    Color? foregroundColor,
-    Color? backgroundColor,
-    Color? disabledForegroundColor,
-    Color? disabledBackgroundColor,
-    Color? shadowColor,
-    Color? surfaceTintColor,
-    Color? iconColor,
-    TextStyle? textStyle,
-    Color? overlayColor,
-    double? elevation,
-    EdgeInsetsGeometry? padding,
-    Size? minimumSize,
-    Size? fixedSize,
-    Size? maximumSize,
-    MouseCursor? enabledMouseCursor,
-    MouseCursor? disabledMouseCursor,
-    BorderSide? side,
-    OutlinedBorder? shape,
-    VisualDensity? visualDensity,
-    MaterialTapTargetSize? tapTargetSize,
-    Duration? animationDuration,
-    bool? enableFeedback,
-    AlignmentGeometry? alignment,
-    InteractiveInkFeatureFactory? splashFactory,
-  }) {
-    return TextButton.styleFrom(
-      foregroundColor: foregroundColor,
-      backgroundColor: backgroundColor,
-      disabledBackgroundColor: disabledBackgroundColor,
-      disabledForegroundColor: disabledForegroundColor,
-      shadowColor: shadowColor,
-      surfaceTintColor: surfaceTintColor,
-      iconColor: iconColor,
-      textStyle: textStyle,
-      overlayColor: overlayColor,
-      elevation: elevation,
-      padding: padding,
-      minimumSize: minimumSize,
-      fixedSize: fixedSize,
-      maximumSize: maximumSize,
-      enabledMouseCursor: enabledMouseCursor,
-      disabledMouseCursor: disabledMouseCursor,
-      side: side,
-      shape: shape,
-      visualDensity: visualDensity,
-      tapTargetSize: tapTargetSize,
-      animationDuration: animationDuration,
-      enableFeedback: enableFeedback,
-      alignment: alignment,
-      splashFactory: splashFactory,
-    );
-  }
-
   @override
   List<DiagnosticsNode> debugDescribeChildren() {
     return <DiagnosticsNode>[
@@ -2125,8 +1918,8 @@ class _SubmenuButtonState extends State<SubmenuButton> {
         }
         return child;
       },
-      children: widget.children,
       target: widget.child,
+      children: widget.children,
     );
   }
 
@@ -3597,9 +3390,11 @@ class _MenuPanelState extends State<_MenuPanel> {
     // reduce the horizontal padding to zero.
     final double dy = densityAdjustment.dy;
     final double dx = math.max(0, densityAdjustment.dx);
-    final EdgeInsetsGeometry resolvedPadding = padding
-        .add(EdgeInsets.symmetric(horizontal: dx, vertical: dy))
-        .clamp(EdgeInsets.zero, EdgeInsetsGeometry.infinity);
+    final EdgeInsetsGeometry resolvedPadding =
+        padding.add(EdgeInsets.symmetric(horizontal: dx, vertical: dy)).clamp(
+              const EdgeInsets.symmetric(vertical: 6),
+              EdgeInsetsGeometry.infinity,
+            );
 
     BoxConstraints effectiveConstraints = visualDensity.effectiveConstraints(
       BoxConstraints(
@@ -4094,7 +3889,6 @@ class _MenuButtonDefaultsM3 extends ButtonStyle {
 
   @override
   WidgetStateProperty<TextStyle?> get textStyle {
-    // TODO(tahatesser): This is taken from https://m3.material.io/components/menus/specs
     // Update this when the token is available.
     return WidgetStatePropertyAll<TextStyle?>(_textTheme.labelLarge);
   }

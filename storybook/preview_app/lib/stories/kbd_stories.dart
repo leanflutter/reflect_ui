@@ -14,7 +14,7 @@ class KbdMeta extends Meta with _$KbdMeta {
   Widget buildWidget(BuildContext context, List<Arg> args) {
     return StatefulBuilder(
       builder: (context, setState) {
-        return Kbd('Ctrl');
+        return const Kbd('Ctrl');
       },
     );
   }
